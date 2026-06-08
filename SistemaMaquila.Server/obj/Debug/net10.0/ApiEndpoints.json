@@ -1,0 +1,42 @@
+[
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.EmpleadoController",
+    "Method": "Get",
+    "RelativePath": "api/Empleado",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.EmpleadoController",
+    "Method": "Post",
+    "RelativePath": "api/Empleado",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.EmpleadoController",
+    "Method": "Put",
+    "RelativePath": "api/Empleado",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.EmpleadoController",
+    "Method": "Delete",
+    "RelativePath": "api/Empleado",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

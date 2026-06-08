@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\controllers\\empleadocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\controllers\\empleadocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\empleadofolder\\empleadopostdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\empleadofolder\\empleadopostdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\empleadofolder\\empleadogetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\empleadofolder\\empleadogetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EmpleadoPostDTO.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\EmpleadoPostDTO.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\EmpleadoPostDTO.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\EmpleadoPostDTO.cs",
+              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\EmpleadoPostDTO.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAABcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-08T18:30:32.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EmpleadoGetDTO.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\EmpleadoGetDTO.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\EmpleadoGetDTO.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\EmpleadoGetDTO.cs",
+              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\EmpleadoGetDTO.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAswBwAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-08T18:29:38.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EmpleadoController.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\EmpleadoController.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Server\\Controllers\\EmpleadoController.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\EmpleadoController.cs",
+              "RelativeToolTip": "SistemaMaquila.Server\\Controllers\\EmpleadoController.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAwCsAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-07T13:51:22.397Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+@SistemaMaquila.Server_HostAddress = http://localhost:5122
+
+GET {{SistemaMaquila.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,11 @@
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\bin\Debug\net10.0\SistemaMaquila.Shared.deps.json
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\bin\Debug\net10.0\SistemaMaquila.Shared.dll
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\bin\Debug\net10.0\SistemaMaquila.Shared.pdb
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\SistemaMaquila.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\SistemaMaquila.Shared.AssemblyInfoInputs.cache
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\SistemaMaquila.Shared.AssemblyInfo.cs
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\SistemaMaquila.Shared.csproj.CoreCompileInputs.cache
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\SistemaMaquila.Shared.dll
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\refint\SistemaMaquila.Shared.dll
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\SistemaMaquila.Shared.pdb
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\ref\SistemaMaquila.Shared.dll
