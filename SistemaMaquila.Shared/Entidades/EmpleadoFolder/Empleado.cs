@@ -14,7 +14,7 @@ namespace SistemaMaquila.Shared.Entidades.EmpleadoFolder
         public decimal CostoMinutoBase { get; set; }
         public int LineaId { get; set; }
         public Linea Linea { get; set; }
-        public bool Visible { get; set; }   
+        public bool Visible { get; set; } = true; 
 
 
     }

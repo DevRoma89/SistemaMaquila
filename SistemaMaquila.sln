@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.6.11822.322 stable
+VisualStudioVersion = 18.6.11822.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaMaquila.Server", "SistemaMaquila.Server\SistemaMaquila.Server.csproj", "{BEF88882-A627-4575-9272-3263B8156186}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaMaquila.Shared", "SistemaMaquila.Shared\SistemaMaquila.Shared.csproj", "{5730B624-C49E-4299-9B27-BE3694AA90C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaMaquila.Client", "SistemaMaquila.Client\SistemaMaquila.Client.csproj", "{118230C2-9793-4E30-8539-2A13CCED02C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5730B624-C49E-4299-9B27-BE3694AA90C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5730B624-C49E-4299-9B27-BE3694AA90C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5730B624-C49E-4299-9B27-BE3694AA90C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{118230C2-9793-4E30-8539-2A13CCED02C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{118230C2-9793-4E30-8539-2A13CCED02C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{118230C2-9793-4E30-8539-2A13CCED02C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{118230C2-9793-4E30-8539-2A13CCED02C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,7 +7,17 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[SistemaMaquila.Shared.Entidades.EmpleadoFolder.EmpleadoGetDTO, SistemaMaquila.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "SistemaMaquila.Server.Controllers.EmpleadoController",
@@ -16,8 +26,24 @@
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SistemaMaquila.Shared.Entidades.EmpleadoFolder.EmpleadoPostDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SistemaMaquila.Shared.Entidades.EmpleadoFolder.Empleado",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "SistemaMaquila.Server.Controllers.EmpleadoController",
@@ -33,6 +59,336 @@
     "ContainingType": "SistemaMaquila.Server.Controllers.EmpleadoController",
     "Method": "Delete",
     "RelativePath": "api/Empleado",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.HabilidadEmpleadoController",
+    "Method": "Get",
+    "RelativePath": "api/HabilidadEmpleado",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[SistemaMaquila.Shared.Entidades.HabilidadEmpleadoFolder.HabilidadEmpleadoGetDTO, SistemaMaquila.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.HabilidadEmpleadoController",
+    "Method": "Post",
+    "RelativePath": "api/HabilidadEmpleado",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SistemaMaquila.Shared.Entidades.HabilidadEmpleadoFolder.HabilidadEmpleadoPostDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SistemaMaquila.Shared.Entidades.HabilidadEmpleadoFolder.HabilidadEmpleado",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.HabilidadEmpleadoController",
+    "Method": "Put",
+    "RelativePath": "api/HabilidadEmpleado",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.HabilidadEmpleadoController",
+    "Method": "Delete",
+    "RelativePath": "api/HabilidadEmpleado",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.InventarioLineaController",
+    "Method": "Get",
+    "RelativePath": "api/InventarioLinea",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[SistemaMaquila.Shared.Entidades.InventarioLineaFolder.InventarioLineaGetDTO, SistemaMaquila.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.InventarioLineaController",
+    "Method": "Post",
+    "RelativePath": "api/InventarioLinea",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SistemaMaquila.Shared.Entidades.InventarioLineaFolder.InventarioLineaPostDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SistemaMaquila.Shared.Entidades.InventarioLineaFolder.InventarioLinea",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.InventarioLineaController",
+    "Method": "Put",
+    "RelativePath": "api/InventarioLinea",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.InventarioLineaController",
+    "Method": "Delete",
+    "RelativePath": "api/InventarioLinea",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.LineaController",
+    "Method": "Get",
+    "RelativePath": "api/Linea",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[SistemaMaquila.Shared.Entidades.LineaFolder.LineaGetDTO, SistemaMaquila.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.LineaController",
+    "Method": "Post",
+    "RelativePath": "api/Linea",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SistemaMaquila.Shared.Entidades.LineaFolder.LineaPostDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SistemaMaquila.Shared.Entidades.LineaFolder.Linea",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.LineaController",
+    "Method": "Put",
+    "RelativePath": "api/Linea",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.LineaController",
+    "Method": "Delete",
+    "RelativePath": "api/Linea",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.OperacionController",
+    "Method": "Get",
+    "RelativePath": "api/Operacion",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[SistemaMaquila.Shared.Entidades.OperacionFolder.OperacionGetDTO, SistemaMaquila.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.OperacionController",
+    "Method": "Post",
+    "RelativePath": "api/Operacion",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SistemaMaquila.Shared.Entidades.OperacionFolder.OperacionPostDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SistemaMaquila.Shared.Entidades.OperacionFolder.Operacion",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.OperacionController",
+    "Method": "Put",
+    "RelativePath": "api/Operacion",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.OperacionController",
+    "Method": "Delete",
+    "RelativePath": "api/Operacion",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.TipoMaquinaController",
+    "Method": "Get",
+    "RelativePath": "api/TipoMaquina",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[SistemaMaquila.Shared.Entidades.TipoMaquinaFolder.TipoMaquinaGetDTO, SistemaMaquila.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.TipoMaquinaController",
+    "Method": "Post",
+    "RelativePath": "api/TipoMaquina",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SistemaMaquila.Shared.Entidades.TipoMaquinaFolder.TipoMaquinaPostDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SistemaMaquila.Shared.Entidades.TipoMaquinaFolder.TipoMaquina",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.TipoMaquinaController",
+    "Method": "Put",
+    "RelativePath": "api/TipoMaquina",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.TipoMaquinaController",
+    "Method": "Delete",
+    "RelativePath": "api/TipoMaquina",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,

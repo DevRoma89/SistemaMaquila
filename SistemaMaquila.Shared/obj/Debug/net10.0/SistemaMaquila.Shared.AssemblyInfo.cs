@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SistemaMaquila.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52c590ef24f3b347164bdc09e392f9f192ab0ee3")]
 [assembly: System.Reflection.AssemblyProductAttribute("SistemaMaquila.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SistemaMaquila.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

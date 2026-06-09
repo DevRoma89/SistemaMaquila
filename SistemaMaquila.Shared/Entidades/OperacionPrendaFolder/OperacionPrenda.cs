@@ -9,7 +9,7 @@ namespace SistemaMaquila.Shared.Entidades.OperacionPrendaFolder
 {
     public class OperacionPrenda
     {
-        public int Id    { get; set; }
+        public int Id { get; set; }
         public int PrendaId { get; set; }
         public Prenda Prenda{ get; set; }
         public int OrdenSecuencia { get; set; }
@@ -17,7 +17,6 @@ namespace SistemaMaquila.Shared.Entidades.OperacionPrendaFolder
         public Operacion Operacion { get; set; }
         public decimal SAMReal { get; set; }
         public bool  Visible { get; set; }
-
-
+         
     }
 }

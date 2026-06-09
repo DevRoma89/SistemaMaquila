@@ -9,3 +9,4 @@ C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Deb
 C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\refint\SistemaMaquila.Shared.dll
 C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\SistemaMaquila.Shared.pdb
 C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\ref\SistemaMaquila.Shared.dll
+C:\Users\augusto.ojeda\source\repos\SistemaMaquila\SistemaMaquila.Shared\obj\Debug\net10.0\SistemaMaquila.Shared.sourcelink.json

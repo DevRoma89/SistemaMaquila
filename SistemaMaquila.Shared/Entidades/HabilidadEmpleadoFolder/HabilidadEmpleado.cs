@@ -14,7 +14,7 @@ namespace SistemaMaquila.Shared.Entidades.HabilidadEmpleadoFolder
         public int OperacionId { get; set; }
         public Operacion Operacion  { get; set; }
         public decimal EficienciaSocio { get; set; }
-        public bool Visible { get; set; }   
+        public bool Visible { get; set; } = true;  
 
 
     }

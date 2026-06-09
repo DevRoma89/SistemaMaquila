@@ -9,6 +9,6 @@ namespace SistemaMaquila.Shared.Entidades.LineaFolder
         public int Id { get; set; }
         public string Nombre { get; set; }
         public decimal EficienciaHistorica { get; set; }
-        public bool Visible { get; set; }   
+        public bool Visible { get; set; }   = true; 
     }
 }

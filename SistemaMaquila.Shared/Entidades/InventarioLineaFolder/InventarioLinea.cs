@@ -15,7 +15,7 @@ namespace SistemaMaquila.Shared.Entidades.InventarioLineaFolder
         public int TipoMaquinaId { get; set; }
         public TipoMaquina  TipoMaquina { get; set; }
         public int CantidadDisponible { get; set;  }
-        public bool Visible { get; set; }   
+        public bool Visible { get; set; } = true; 
 
     }
 }
