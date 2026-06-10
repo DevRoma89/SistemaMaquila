@@ -330,6 +330,164 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SistemaMaquila.Server.Controllers.OperacionPrendaController",
+    "Method": "Get",
+    "RelativePath": "api/OperacionPrenda",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[SistemaMaquila.Shared.Entidades.OperacionPrendaFolder.OperacionPrendaGetDTO, SistemaMaquila.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.OperacionPrendaController",
+    "Method": "Post",
+    "RelativePath": "api/OperacionPrenda",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SistemaMaquila.Shared.Entidades.OperacionPrendaFolder.OperacionPrendaPostDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SistemaMaquila.Shared.Entidades.OperacionPrendaFolder.OperacionPrenda",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.OperacionPrendaController",
+    "Method": "Put",
+    "RelativePath": "api/OperacionPrenda",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.OperacionPrendaController",
+    "Method": "Delete",
+    "RelativePath": "api/OperacionPrenda",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.PrendaController",
+    "Method": "Get",
+    "RelativePath": "api/Prenda",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[SistemaMaquila.Shared.Entidades.PrendaFolder.PrendaGetDTO, SistemaMaquila.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.PrendaController",
+    "Method": "Post",
+    "RelativePath": "api/Prenda",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SistemaMaquila.Shared.Entidades.PrendaFolder.PrendaPostDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SistemaMaquila.Shared.Entidades.PrendaFolder.Prenda",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.PrendaController",
+    "Method": "Put",
+    "RelativePath": "api/Prenda",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.PrendaController",
+    "Method": "Delete",
+    "RelativePath": "api/Prenda",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaMaquila.Server.Controllers.PrendaController",
+    "Method": "ObtenerFichaTecnica",
+    "RelativePath": "api/Prenda/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SistemaMaquila.Shared.Entidades.PrendaFolder.PrendaGetDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "SistemaMaquila.Server.Controllers.TipoMaquinaController",
     "Method": "Get",
     "RelativePath": "api/TipoMaquina",

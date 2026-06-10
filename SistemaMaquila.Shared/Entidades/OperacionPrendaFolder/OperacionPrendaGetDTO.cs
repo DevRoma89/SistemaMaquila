@@ -9,8 +9,7 @@ namespace SistemaMaquila.Shared.Entidades.OperacionPrendaFolder
     public class OperacionPrendaGetDTO
     {
         public int Id { get; set; }
-        public int PrendaId { get; set; }
-        public string Prenda { get; set; }
+        public int PrendaId { get; set; } 
         public int OrdenSecuencia { get; set; }
         public int OperacionId { get; set; }
         public string Operacion { get; set; }
@@ -22,8 +21,7 @@ namespace SistemaMaquila.Shared.Entidades.OperacionPrendaFolder
             return new OperacionPrendaGetDTO
             {
                 Id = ent.Id,
-                PrendaId = ent.PrendaId,
-                Prenda = ent.Prenda.Nombre,
+                PrendaId = ent.PrendaId, 
                 OrdenSecuencia = ent.OrdenSecuencia,
                 OperacionId = ent.OperacionId,
                 Operacion = ent.Operacion.Descripcion,

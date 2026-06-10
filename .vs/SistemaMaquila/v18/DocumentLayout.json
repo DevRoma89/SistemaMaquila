@@ -3,20 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\operacionprendafolder\\operacionprendagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\operacionprendafolder\\operacionprendagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\controllers\\prendacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\controllers\\prendacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\operacionprendafolder\\operacionprenda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\operacionprendafolder\\operacionprenda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\controllers\\prendacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\controllers\\prendacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\prendafolder\\prendagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\prendafolder\\prendagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\operacionprendafolder\\operacionprendagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\operacionprendafolder\\operacionprendagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\prendafolder\\prenda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\prendafolder\\prenda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\prendafolder\\fichatecnicagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\prendafolder\\fichatecnicagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +38,97 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainLayout.razor",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Layout\\MainLayout.razor",
-              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Layout\\MainLayout.razor",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Layout\\MainLayout.razor",
-              "RelativeToolTip": "SistemaMaquila.Client\\Layout\\MainLayout.razor",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAACcAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-06-09T18:34:47.326Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "OperacionPrendaGetDTO.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
-              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA5wB8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-09T18:16:32.101Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "OperacionPrenda.cs",
               "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrenda.cs",
               "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrenda.cs",
               "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrenda.cs",
               "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrenda.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-09T18:13:23.794Z",
+              "WhenOpened": "2026-06-10T18:46:27.257Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "OperacionPrendaGetDTO.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
+              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAuwBoAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T13:29:34.06Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Program.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Server\\Program.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Program.cs",
+              "RelativeToolTip": "SistemaMaquila.Server\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T18:36:49.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FichaTecnicaGetDTO.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\FichaTecnicaGetDTO.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\FichaTecnicaGetDTO.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\FichaTecnicaGetDTO.cs",
+              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\FichaTecnicaGetDTO.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAuwAkAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T13:35:28.947Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PrendaGetDTO.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\PrendaGetDTO.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\PrendaGetDTO.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\PrendaGetDTO.cs",
+              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\PrendaGetDTO.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA0AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T13:29:12.459Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Prenda.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\Prenda.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\Prenda.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\Prenda.cs",
+              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\Prenda.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAASwA0AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T13:24:46.781Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "PrendaController.cs",
               "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\PrendaController.cs",
               "RelativeDocumentMoniker": "SistemaMaquila.Server\\Controllers\\PrendaController.cs",
               "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\PrendaController.cs",
               "RelativeToolTip": "SistemaMaquila.Server\\Controllers\\PrendaController.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAgwCAAAABNAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAWwCcAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-09T18:12:45.34Z",
+              "WhenOpened": "2026-06-10T13:24:03.396Z",
               "EditorCaption": ""
             }
           ]

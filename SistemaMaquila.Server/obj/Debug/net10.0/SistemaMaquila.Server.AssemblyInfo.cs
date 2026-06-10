@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SistemaMaquila.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52c590ef24f3b347164bdc09e392f9f192ab0ee3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+220b80a0d7697214b97b98056518b834f7285685")]
 [assembly: System.Reflection.AssemblyProductAttribute("SistemaMaquila.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SistemaMaquila.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

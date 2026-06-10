@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SistemaMaquila.Shared.Entidades.OperacionPrendaFolder;
 using SistemaMaquila.Shared.Entidades.PrendaFolder;
 using SistemaMaquila.Shared.Entidades.TipoMaquinaFolder;
 using SistemaMaquila.Shared.Servicios;
@@ -23,10 +24,25 @@ namespace SistemaMaquila.Server.Controllers
         public async Task<ActionResult<List<PrendaGetDTO>>> Get()
         {
             return await context.Prendas
+                                .Include(x=>x.Operaciones)
+                                .ThenInclude(x=>x.Operacion)
                                 .Where(x => x.Visible == true)
                                 .Select(x => PrendaGetDTO.EntityToDto(x))
                                 .ToListAsync();
 
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<PrendaGetDTO>> ObtenerFichaTecnica([FromRoute]int id)
+        {
+            var resultado = await context.Prendas
+                .Include(p => p.Operaciones)
+                .ThenInclude(x=>x.Operacion)
+                .FirstOrDefaultAsync(x => x.Id == id); 
+             
+            if (resultado == null) return NotFound("Prenda no encontrada");
+             
+            return Ok( FichaTecnicaGetDTO.EntityToDto(resultado) );
         }
 
         [HttpPost]

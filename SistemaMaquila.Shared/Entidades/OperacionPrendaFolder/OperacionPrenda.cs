@@ -16,7 +16,9 @@ namespace SistemaMaquila.Shared.Entidades.OperacionPrendaFolder
         public int OperacionId { get; set; }
         public Operacion Operacion { get; set; }
         public decimal SAMReal { get; set; }
-        public bool  Visible { get; set; }
-         
+        public bool Visible { get; set; } = true;
+
+      
+
     }
 }

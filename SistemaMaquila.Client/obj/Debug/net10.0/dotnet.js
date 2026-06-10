@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "SistemaMaquila.Client",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-o/lm/hc66Wqxp2lSxLMU/G7Ji9C8CqLBqBoeeLPYNUw=",
+    "hash": "sha256-nVfsHp8dDOieg+EkcsLZCcuAl3YFbfX6lD6jaVBRvpY=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.rjbmzc4jpg.js"
@@ -1253,6 +1253,12 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
         "cache": "force-cache"
       },
       {
+        "virtualPath": "SistemaMaquila.Shared.wasm",
+        "name": "SistemaMaquila.Shared.9uwv87vda1.wasm",
+        "hash": "sha256-/5NXSqOEBDz2oTzAeFwTBrXiyeQvNGKIzOx9JLD2L24=",
+        "cache": "force-cache"
+      },
+      {
         "virtualPath": "Microsoft.DotNet.HotReload.WebAssembly.Browser.wasm",
         "name": "Microsoft.DotNet.HotReload.WebAssembly.Browser.1vk97ay1th.wasm",
         "hash": "sha256-I/8bN7bvY07yPXS3SfS5fxtkCkWeIg2Dd/P37Rv44vg=",
@@ -1260,16 +1266,22 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "SistemaMaquila.Client.wasm",
-        "name": "SistemaMaquila.Client.fou29aajsq.wasm",
-        "hash": "sha256-z3jcttmjzQktANjueWqoOCmmqQW/OGo5QnHBa3P00Ag=",
+        "name": "SistemaMaquila.Client.wkvrrasxt6.wasm",
+        "hash": "sha256-oDtTm+379V9ASWUxOsTo+AZdV3Rhd3m2MDe3ztCz7a4=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
+        "virtualPath": "SistemaMaquila.Shared.pdb",
+        "name": "SistemaMaquila.Shared.4n1y4i1a83.pdb",
+        "hash": "sha256-MCfgsW8Cz5KTXYPNqL4svS5lagijLL1vL+ScyvIUX0M=",
+        "cache": "force-cache"
+      },
+      {
         "virtualPath": "SistemaMaquila.Client.pdb",
-        "name": "SistemaMaquila.Client.2g83s7v0ir.pdb",
-        "hash": "sha256-glWLwBiWWM0eXoH08JtKVoj554txNqrgoBnLWWzNDfI=",
+        "name": "SistemaMaquila.Client.papb9dhrpt.pdb",
+        "hash": "sha256-0SGXeySq1OEk8RQ3QPIhyvocJn3DzBjX4za7Kou5D+s=",
         "cache": "force-cache"
       }
     ],
