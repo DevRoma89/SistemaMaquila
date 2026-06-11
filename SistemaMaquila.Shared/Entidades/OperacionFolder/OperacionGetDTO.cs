@@ -20,6 +20,7 @@ namespace SistemaMaquila.Shared.Entidades.OperacionFolder
             {
                 Id = ent.Id,
                 Descripcion = ent.Descripcion,
+                SAMEstimado = ent.SAMEstimado,
                 TipoMaquinaId = ent.TipoMaquinaId,
                 TipoMaquina = ent.TipoMaquina.Nombre
             }; 

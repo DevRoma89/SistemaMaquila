@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SistemaMaquila.Shared.Entidades.LineaFolder;
+using SistemaMaquila.Shared.Entidades.OperacionFolder;
 using SistemaMaquila.Shared.Entidades.TipoMaquinaFolder;
 using SistemaMaquila.Shared.Servicios;
-using Microsoft.EntityFrameworkCore;
-using SistemaMaquila.Shared.Entidades.OperacionFolder;
 
 namespace SistemaMaquila.Server.Controllers
 {
@@ -68,17 +69,56 @@ namespace SistemaMaquila.Server.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Put()
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, [FromBody] OperacionPutDTO dto)
         {
+            if (id != dto.Id)
+            {
+                return BadRequest("El Id no coincide");
+            }
+
+            if (Validador.CampoTexto(dto.Descripcion))
+            {
+                return BadRequest("No puede ingresar una descripcion vacia");
+            }
+
+            if (Validador.CampoNumerico(dto.SAMEstimado))
+            {
+                return BadRequest("Debe ingresar un numero mayor a 0");
+            }
+   
+            var ent = await context.Operaciones.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (ent == null)
+            {
+                return NotFound("No se encontro la operacion");
+            }
+
+            OperacionPutDTO.DtoToEntity(dto, ent);
+
+            await context.SaveChangesAsync();
+
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
+            var ent = await context.Operaciones.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (ent == null)
+            {
+                return NotFound();
+            }
+
+            ent.Visible = false;
+
+            await context.SaveChangesAsync();
+
             return Ok();
         }
+
 
     }
 

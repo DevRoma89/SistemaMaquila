@@ -1,0 +1,320 @@
+﻿@page "/operaciones"
+@inject OperacionService operacionService
+@inject TipoMaquinaService tipoMaquinaService
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
+<PageTitle>Gestion de Operaciones</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudCard Elevation="5">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h5" Class="font-weight-bold">
+                    <MudIcon Icon="@Icons.Material.Filled.People" Class="mr-2" Color="Color.Primary" />
+                    Gestión de Operaciones
+                </MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                    Administra las operaciones y sus tipo de Maquinas
+                </MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Add"
+                           OnClick="AbrirCrear">
+                    Nueva Operacion
+                </MudButton>
+            </CardHeaderActions>
+        </MudCardHeader>
+
+        <MudCardContent>
+            <!-- Barra de búsqueda y filtros -->
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="searchTerm"
+                                  Label="Buscar por nombre..."
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Search"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"
+                                  Class="mb-4" />
+                </MudItem>
+
+            </MudGrid>
+
+            <!-- Tabla mejorada -->
+            <MudTable Items="@operacionesFiltradas"
+                      Loading="@cargando"
+                      Bordered="true"
+                      Hover="true"
+                      Breakpoint="Breakpoint.Sm"
+                      Dense="true"
+                      Elevation="0"
+                      Class="empleados-table">
+
+                <ToolBarContent>
+                    <MudText Typo="Typo.body2" Class="pa-2">
+                        Total: @operacionesFiltradas.Count() operaciones
+                    </MudText>
+                    <MudSpacer />
+                    <MudIconButton Icon="@Icons.Material.Filled.Refresh"
+                                   Size="Size.Small"
+                                   OnClick="@CargarDatos"
+                                   Disabled="@cargando" />
+                </ToolBarContent>
+
+                <HeaderContent>
+                    <MudTh>Descripcion</MudTh>
+                    <MudTh>Tipo de Maquina</MudTh>
+                    <MudTh>SAM Estimado</MudTh>
+                    <MudTh>Acciones</MudTh>
+                </HeaderContent>
+
+                <RowTemplate>
+                    <MudTd DataLabel="Nombre">
+                        <div class="d-flex align-center">
+                            <MudAvatar Size="Size.Small" Class="mr-2" Color="Color.Primary" Variant="Variant.Text">
+                                <MudIcon Icon="@Icons.Material.Filled.Factory" Size="Size.Small" />
+                            </MudAvatar>
+                            
+                            @context.Descripcion
+
+                        </div>
+                    </MudTd>
+                    <MudTd DataLabel="Tipo de Maquina">
+                        @context.TipoMaquina
+                    </MudTd>
+                    <MudTd DataLabel="SAM Estimado">
+                        <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                             @context.SAMEstimado
+                        </MudChip>
+                    </MudTd>
+                    <MudTd DataLabel="Acciones">
+                        <MudTooltip Text="Editar" Arrow>
+                            <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                           Color="Color.Primary"
+                                           Size="Size.Small"
+                                           OnClick="@(() => AbrirEditar(context))" />
+                        </MudTooltip>
+                        <MudTooltip Text="Eliminar" Arrow>
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                           Color="Color.Error"
+                                           Size="Size.Small"
+                                           OnClick="@(() => Eliminar(context))" />
+                        </MudTooltip>
+                    </MudTd>
+                </RowTemplate>
+
+                <NoRecordsContent>
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                        <MudText Class="text-center">
+                            <MudIcon Icon="@Icons.Material.Filled.Info" Class="mr-2" />
+                            @(string.IsNullOrEmpty(searchTerm) ? "No hay operaciones cargados" : "No se encontraron operaciones con los filtros aplicados")
+                        </MudText>
+                    </MudAlert>
+                </NoRecordsContent>
+
+                <LoadingContent>
+                    <div class="d-flex justify-center pa-8">
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Large" />
+                        <MudText Class="ml-3">Cargando empleados...</MudText>
+                    </div>
+                </LoadingContent>
+            </MudTable>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@code {
+    private List<OperacionGetDTO> operaciones = new();
+    private List<TipoMaquinaGetDTO> maquinas = new();
+    private bool cargando = true;
+    private string searchTerm = string.Empty;
+    private int? selectedLineaId = null;
+
+    private List<OperacionGetDTO> operacionesFiltradas => operaciones
+        .Where(e => string.IsNullOrEmpty(searchTerm) ||
+                    e.Descripcion.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+        .OrderBy(e => e.Descripcion)
+        .ToList();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarDatos();
+    }
+
+    private async Task CargarDatos()
+    {
+        try
+        {
+            cargando = true;
+            StateHasChanged();
+
+            var operacionesResponse = await operacionService.GetOperaciones();
+
+            if (!operacionesResponse.Error)
+            {
+                operaciones = operacionesResponse.Response ?? new();
+            }
+            else
+            {
+                Snackbar.Add("Error al cargar líneas", Severity.Error);
+            }
+
+            var maquinasResponse = await tipoMaquinaService.Get();
+
+            if (!maquinasResponse.Error)
+            {
+                maquinas = maquinasResponse.Response ?? new();
+
+                Console.WriteLine(await maquinasResponse.GetBody()); 
+                Console.WriteLine(maquinas); 
+
+            }
+            else
+            {
+                Snackbar.Add("Error al cargar las maquinas", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error inesperado: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            cargando = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task AbrirCrear()
+    {
+        var modelo = new OperacionPutDTO();
+
+        var parametros = new DialogParameters<OperacionFormDialog>
+        {
+            { x => x.Modelo, modelo },
+            { x => x.Maquinas, maquinas },
+            { x => x.IsEditMode, false }
+        };
+
+        var options = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<OperacionFormDialog>("Nueva Linea", parametros, options);
+        var resultado = await dialog.Result;
+
+        if (resultado is { Canceled: false })
+        {
+            var datos = (OperacionPutDTO)resultado.Data!;
+
+            var post = new OperacionPostDTO
+            {
+                Descripcion = CapitalizarNombre(datos.Descripcion),
+                SAMEstimado = datos.SAMEstimado
+            };
+
+            var response = await operacionService.PostOperaciones(post);
+
+            if (!response.Error)
+            {
+                Snackbar.Add($"✅ Operacion {datos.Descripcion} creada correctamente", Severity.Success);
+                await CargarDatos();
+            }
+            else
+            {
+                var error = await response.GetBody();
+                Snackbar.Add($"❌ Error: {error}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task AbrirEditar(OperacionGetDTO linea)
+    {
+        var modelo = new OperacionPutDTO
+        {
+            Id = linea.Id,
+            Descripcion = linea.Descripcion, 
+            SAMEstimado = linea.SAMEstimado,
+            TipoMaquinaId = linea.TipoMaquinaId,
+        };
+
+        var parametros = new DialogParameters<OperacionFormDialog>
+        {
+            { x => x.Modelo, modelo },
+            { x => x.Maquinas, maquinas},
+            { x => x.IsEditMode, true }
+        };
+
+        var options = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<OperacionFormDialog>("Editar Operacion", parametros, options);
+        var resultado = await dialog.Result;
+
+        if (resultado is { Canceled: false })
+        {
+            var datos = (OperacionPutDTO)resultado.Data!;
+
+            var put = new OperacionPutDTO
+            {
+                Id = datos.Id,
+                Descripcion = CapitalizarNombre(datos.Descripcion),
+                SAMEstimado = datos.SAMEstimado,
+                TipoMaquinaId= datos.TipoMaquinaId
+            };
+
+            var response = await operacionService.PutOperaciones(datos.Id, put);
+
+            if (!response.Error)
+            {
+                Snackbar.Add($"✏️ Operacion {datos.Descripcion} actualizada correctamente", Severity.Success);
+                await CargarDatos();
+            }
+            else
+            {
+                var error = await response.GetBody();
+                Snackbar.Add($"❌ Error: {error}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task Eliminar(OperacionGetDTO linea)
+    {
+        var confirmar = await DialogService.ShowMessageBoxAsync(
+            title: "Confirmar eliminación",
+            message: $"¿Está seguro que desea eliminar a {linea.Descripcion} ?",
+            yesText: "Sí, eliminar",
+            cancelText: "Cancelar",
+            options: new DialogOptions { CloseButton = true });
+
+        if (confirmar == true)
+        {
+            var response = await operacionService.DeleteOperaciones(linea.Id);
+
+            if (!response.Error)
+            {
+                Snackbar.Add($"🗑️ {linea.Descripcion} eliminado correctamente", Severity.Success);
+                await CargarDatos();
+            }
+            else
+            {
+                Snackbar.Add("❌ Error al eliminar la operacion", Severity.Error);
+            }
+        }
+    }
+
+    private string CapitalizarNombre(string nombre)
+    {
+        if (string.IsNullOrEmpty(nombre)) return nombre;
+        return char.ToUpper(nombre[0]) + nombre[1..].ToLower();
+    }
+}

@@ -1,0 +1,173 @@
+﻿@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6" Class="d-flex align-center">
+            <MudIcon Icon="@(IsEditMode ? Icons.Material.Filled.Edit : Icons.Material.Filled.Factory)"
+                     Color="@(IsEditMode ? Color.Primary : Color.Success)"
+                     Class="mr-2" />
+            @(IsEditMode ? "Editar Linea" : "Nuevo Linea")
+        </MudText>
+    </TitleContent>
+
+    <DialogContent>
+        <MudForm @ref="form" Model="@Modelo">
+            <MudGrid>
+                <!-- Nombre -->
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Modelo.Descripcion"
+                                  Label="Nombre *"
+                                  Placeholder="Ingrese la descripcion"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Badge"
+                                  For="@(() => Modelo.Descripcion)"
+                                  Required="true"
+                                  RequiredError="El nombre es obligatorio"
+                                  Immediate="true">
+
+                    </MudTextField>
+                </MudItem>
+
+                 
+                <!-- Eficiencia Historica -->
+                <MudItem xs="12" sm="6">
+                    <MudNumericField @bind-Value="Modelo.SAMEstimado"
+                                     Label="SAM Estimado *"
+                                     Placeholder="0.00"
+                                     Variant="Variant.Outlined"
+                                     Margin="Margin.Dense"
+                                     Adornment="Adornment.Start"
+                                     AdornmentIcon="@Icons.Material.Filled.Percent"
+                                     Min="0.01m"
+                                     Max="1m"
+                                     Step="0.01m"
+                                     Required="true"
+                                     RequiredError="Debe ingresar un numero mayor a 0"
+                                     HelperText="El numero debe ser mayor a 0">
+
+                        
+                    </MudNumericField>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudSelect T="int"
+                               @bind-Value="Modelo.TipoMaquinaId"
+                               Label="Maquina *"
+                               Variant="Variant.Outlined"
+                               Margin="Margin.Dense"
+                               Adornment="Adornment.Start"
+                               AdornmentIcon="@Icons.Material.Filled.Factory"
+                               Required="true"
+                               RequiredError="Debe seleccionar una línea">
+                        @if (!Maquinas.Any())
+                        {
+                            <MudSelectItem Value="0" Disabled="true">
+                                <MudText Color="Color.Error">No hay maquinas disponibles</MudText>
+                            </MudSelectItem>
+                        }
+                        else
+                        {
+                            @foreach (var maquina in Maquinas)
+                            {
+                                <MudSelectItem Value="@maquina.Id">
+                                    <div class="d-flex align-center">
+
+                                       
+                                        <MudText>@maquina.Nombre</MudText>
+
+                                    </div>
+                                </MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <!-- Información adicional en modo edición -->
+                @if (IsEditMode && Modelo.Id > 0)
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="mt-2">
+                            <MudText Typo="Typo.body2">
+                                <MudIcon Icon="@Icons.Material.Filled.Info" Size="Size.Small" Class="mr-1" />
+                                Editando linea con ID: <strong>@Modelo.Id</strong>
+                            </MudText>
+                        </MudAlert>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Class="mb-2"
+                   Variant="Variant.Text"
+                   OnClick="Cancelar"
+                   StartIcon="@Icons.Material.Filled.Close">
+            Cancelar
+        </MudButton>
+
+        <MudButton Class="mb-2 me-4"
+                   Variant="Variant.Filled"
+                   Color="@(IsEditMode ? Color.Primary : Color.Success)"
+                   OnClick="Guardar"
+                   StartIcon="@(IsEditMode ? Icons.Material.Filled.Save : Icons.Material.Filled.Check)"
+                   Disabled="@(  string.IsNullOrEmpty(Modelo.Descripcion) )">
+            @(IsEditMode ? "Actualizar" : "Crear")
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter] public OperacionPutDTO Modelo { get; set; } = new();
+    [Parameter] public List<TipoMaquinaGetDTO> Maquinas { get; set; } = new();
+    [Parameter] public bool IsEditMode { get; set; } = false;
+
+    private MudForm form = default!;
+
+    protected override void OnInitialized()
+    {
+        // Limpiar valores vacíos en modo creación
+        if (!IsEditMode)
+        {
+            Modelo.Descripcion ??= string.Empty;
+            Modelo.SAMEstimado = 0.1m;
+        }
+    }
+
+    private async Task Guardar()
+    {
+        await form.ValidateAsync();
+
+        if (!form.IsValid || !ValidarDatos())
+        {
+            Snackbar.Add("Por favor, corrija los errores antes de continuar", Severity.Warning);
+            return;
+        }
+
+        MudDialog.Close(DialogResult.Ok(Modelo));
+    }
+
+    private bool ValidarDatos()
+    {
+        if (string.IsNullOrWhiteSpace(Modelo.Descripcion))
+        {
+            Snackbar.Add("El nombre es obligatorio", Severity.Error);
+            return false;
+        }
+
+        if (Modelo.SAMEstimado <= 0)
+        {
+            Snackbar.Add("La Eficiencia Historica debe ser mayor a 0", Severity.Error);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void Cancelar() => MudDialog.Cancel();
+
+}

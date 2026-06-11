@@ -65,16 +65,66 @@ namespace SistemaMaquila.Server.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Put()
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, [FromBody] EmpleadoPutDTO dto)
         {
-            return Ok(); 
+            if (id != dto.Id)
+            {
+                return BadRequest("El Id no coincide");
+            }
+
+            if (Validador.CampoTexto(dto.Nombre))
+            {
+                return BadRequest("No puede ingresar un nombre vacio");
+            }
+
+            if (Validador.CampoTexto(dto.Apellido))
+            {
+                return BadRequest("No puede ingresar un apellido vacio");
+            }
+
+            if (Validador.CampoNumerico(dto.CostoMinutoBase))
+            {
+                return BadRequest("Debe ingresar un Costo mayor a 0");
+            }
+
+            var existeLinea = await context.Lineas.AnyAsync(x => x.Id == dto.LineaId);
+
+            if (!existeLinea)
+            {
+                return NotFound("No se encontro una Linea con ese Id");
+            }
+
+            var ent = await context.Empleados.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (ent == null)
+            {
+                return NotFound("No se encontro el Empleado");
+            }
+
+            EmpleadoPutDTO.DtoToEntity(dto, ent);
+
+            await context.SaveChangesAsync();
+
+            return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            return Ok(); 
+            var ent = await context.Empleados.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (ent == null)
+            {
+                return NotFound();
+            }
+
+            ent.Visible = false;  
+
+            await context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

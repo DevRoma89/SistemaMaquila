@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; 
 using SistemaMaquila.Shared.Entidades.LineaFolder;
+using SistemaMaquila.Shared.Entidades.OperacionFolder;
 using SistemaMaquila.Shared.Entidades.TipoMaquinaFolder;
 using SistemaMaquila.Shared.Servicios;
 
@@ -55,17 +56,50 @@ namespace SistemaMaquila.Server.Controllers
              
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Put()
+
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, [FromBody] TipoMaquinaPutDTO dto)
         {
+            if (id != dto.Id)
+            {
+                return BadRequest("El Id no coincide");
+            }
+
+            if (Validador.CampoTexto(dto.Nombre))
+            {
+                return BadRequest("No puede ingresar un nombre vacia");
+            }
+              
+            var ent = await context.TipoMaquinas.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (ent == null)
+            {
+                return NotFound("No se encontro la maquina");
+            }
+
+            TipoMaquinaPutDTO.DtoToEntity(dto, ent);
+
+            await context.SaveChangesAsync();
+
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
+            var ent = await context.TipoMaquinas.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (ent == null)
+            {
+                return NotFound();
+            }
+
+            ent.Visible = false;
+
+            await context.SaveChangesAsync();
+
             return Ok();
         }
-
     }
 }

@@ -3,32 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\controllers\\prendacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\controllers\\prendacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\controllers\\operacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\controllers\\operacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\operacionprendafolder\\operacionprenda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\operacionprendafolder\\operacionprenda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\servicios\\operacionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\servicios\\operacionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\prendafolder\\prendagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\prendafolder\\prendagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\operacionfolder\\operaciongetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\operacionfolder\\operaciongetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\operacionprendafolder\\operacionprendagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\operacionprendafolder\\operacionprendagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\pages\\cruds\\operacionfolder\\operacion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\pages\\cruds\\operacionfolder\\operacion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\prendafolder\\prenda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\prendafolder\\prenda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\pages\\cruds\\operacionfolder\\operacionformdialog.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\pages\\cruds\\operacionfolder\\operacionformdialog.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\prendafolder\\fichatecnicagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\prendafolder\\fichatecnicagetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,97 +38,97 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "OperacionPrenda.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrenda.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrenda.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrenda.cs",
-              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrenda.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T18:46:27.257Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "OperacionPrendaGetDTO.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
-              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\OperacionPrendaFolder\\OperacionPrendaGetDTO.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAuwBoAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T13:29:34.06Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Program.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Server\\Program.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Program.cs",
-              "RelativeToolTip": "SistemaMaquila.Server\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T18:36:49.642Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "FichaTecnicaGetDTO.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\FichaTecnicaGetDTO.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\FichaTecnicaGetDTO.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\FichaTecnicaGetDTO.cs",
-              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\FichaTecnicaGetDTO.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAuwAkAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T13:35:28.947Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "PrendaGetDTO.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\PrendaGetDTO.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\PrendaGetDTO.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\PrendaGetDTO.cs",
-              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\PrendaGetDTO.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA0AAAApAAAAAAAAAA==",
+              "Title": "OperacionGetDTO.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionFolder\\OperacionGetDTO.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\OperacionFolder\\OperacionGetDTO.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionFolder\\OperacionGetDTO.cs",
+              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\OperacionFolder\\OperacionGetDTO.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBYAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T13:29:12.459Z",
+              "WhenOpened": "2026-06-11T18:46:59.876Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Prenda.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\Prenda.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\Prenda.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\PrendaFolder\\Prenda.cs",
-              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\PrendaFolder\\Prenda.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAASwA0AAAAUAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "OperacionService.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Servicios\\OperacionService.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Servicios\\OperacionService.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Servicios\\OperacionService.cs",
+              "RelativeToolTip": "SistemaMaquila.Client\\Servicios\\OperacionService.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAIAwwBQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T13:24:46.781Z",
+              "WhenOpened": "2026-06-11T18:31:58.309Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PrendaController.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\PrendaController.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Server\\Controllers\\PrendaController.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\PrendaController.cs",
-              "RelativeToolTip": "SistemaMaquila.Server\\Controllers\\PrendaController.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAWwCcAAAArAAAAAAAAAA==",
+              "Title": "OperacionController.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\OperacionController.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Server\\Controllers\\OperacionController.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\OperacionController.cs",
+              "RelativeToolTip": "SistemaMaquila.Server\\Controllers\\OperacionController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAlwB0AAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T13:24:03.396Z",
+              "WhenOpened": "2026-06-11T18:31:30.195Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\Home.razor",
+              "RelativeToolTip": "SistemaMaquila.Client\\Pages\\Home.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-11T18:12:19.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Program.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Program.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Program.cs",
+              "RelativeToolTip": "SistemaMaquila.Client\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T17:43:48.221Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "OperacionFormDialog.razor",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\OperacionFormDialog.razor",
+              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\OperacionFormDialog.razor",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\OperacionFormDialog.razor",
+              "RelativeToolTip": "SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\OperacionFormDialog.razor",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAwwIYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-11T17:02:04.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Operacion.razor",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\Operacion.razor",
+              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\Operacion.razor",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\Operacion.razor",
+              "RelativeToolTip": "SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\Operacion.razor",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAAABABAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-11T17:02:03.934Z",
               "EditorCaption": ""
             }
           ]

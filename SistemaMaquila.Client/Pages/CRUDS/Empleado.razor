@@ -1,0 +1,333 @@
+﻿@page "/empleados"
+@inject EmpleadoService empleadoService
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
+<PageTitle>Gestion de Empleados</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudCard Elevation="5">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h5" Class="font-weight-bold">
+                    <MudIcon Icon="@Icons.Material.Filled.People" Class="mr-2" Color="Color.Primary" />
+                    Gestión de Empleados
+                </MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                    Administra los empleados y sus costos por minuto
+                </MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Add"
+                           OnClick="AbrirCrear">
+                    Nuevo Empleado
+                </MudButton>
+            </CardHeaderActions>
+        </MudCardHeader>
+
+        <MudCardContent>
+            <!-- Barra de búsqueda y filtros -->
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="searchTerm"
+                                  Label="Buscar por nombre o apellido..."
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Search"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"
+                                  Class="mb-4" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSelect T="int?" Label="Filtrar por línea"
+                               @bind-Value="selectedLineaId"
+                               Variant="Variant.Outlined"
+                               Class="mb-4" >
+                        <MudSelectItem T="int?" Value="null">Todas las líneas</MudSelectItem>
+                        @foreach (var linea in lineas)
+                        {
+                            <MudSelectItem T="int?" Value="@linea.Id">@linea.Nombre</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+
+            <!-- Tabla mejorada -->
+            <MudTable Items="@empleadosFiltrados" 
+                      Loading="@cargando" 
+                      Bordered="true"
+                      Hover="true"
+                      Breakpoint="Breakpoint.Sm"
+                      Dense="true"
+                      Elevation="0"
+                      Class="empleados-table">
+                
+                <ToolBarContent>
+                    <MudText Typo="Typo.body2" Class="pa-2">
+                        Total: @empleadosFiltrados.Count() empleados
+                    </MudText>
+                    <MudSpacer />
+                    <MudIconButton Icon="@Icons.Material.Filled.Refresh"
+                                   Size="Size.Small"
+                                   OnClick="@CargarDatos"
+                                   Disabled="@cargando" />
+                </ToolBarContent>
+
+                <HeaderContent>
+                    <MudTh>Nombre Completo</MudTh>
+                    <MudTh>Costo por minuto</MudTh>
+                    <MudTh>Línea</MudTh>
+                    <MudTh>Acciones</MudTh>
+                </HeaderContent>
+
+                <RowTemplate>
+                    <MudTd DataLabel="Nombre">
+                        <div class="d-flex align-center">
+                            <MudAvatar Size="Size.Small" Class="mr-2" Color="Color.Primary" Variant="Variant.Text">
+                                <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Small" />
+                            </MudAvatar>
+                            <div>
+                                <MudText Typo="Typo.body1" Class="font-weight-medium">@context.Nombre @context.Apellido</MudText>
+                            </div>
+                        </div>
+                    </MudTd>
+                    <MudTd DataLabel="Costo por minuto"  >
+                        <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                            @context.CostoMinutoBase.ToString("C")
+                        </MudChip>
+                    </MudTd>
+                    <MudTd DataLabel="Línea">
+                        <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Filled" Class="linea-chip">
+                            @context.Linea
+                        </MudChip>
+                    </MudTd>
+                    <MudTd DataLabel="Acciones" >
+                        <MudTooltip Text="Editar" Arrow>
+                            <MudIconButton Icon="@Icons.Material.Filled.Edit" 
+                                           Color="Color.Primary"
+                                           Size="Size.Small"
+                                           OnClick="@(() => AbrirEditar(context))" />
+                        </MudTooltip>
+                        <MudTooltip Text="Eliminar" Arrow>
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" 
+                                           Color="Color.Error"
+                                           Size="Size.Small"
+                                           OnClick="@(() => Eliminar(context))" />
+                        </MudTooltip>
+                    </MudTd>
+                </RowTemplate>
+
+                <NoRecordsContent>
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                        <MudText Class="text-center">
+                            <MudIcon Icon="@Icons.Material.Filled.Info" Class="mr-2" />
+                            @(string.IsNullOrEmpty(searchTerm) ? "No hay empleados cargados" : "No se encontraron empleados con los filtros aplicados")
+                        </MudText>
+                    </MudAlert>
+                </NoRecordsContent>
+
+                <LoadingContent>
+                    <div class="d-flex justify-center pa-8">
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Large" />
+                        <MudText Class="ml-3">Cargando empleados...</MudText>
+                    </div>
+                </LoadingContent>
+            </MudTable>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@code {
+    private List<EmpleadoGetDTO> empleados = new();
+    private List<LineaGetDTO> lineas = new();
+    private bool cargando = true;
+    private string searchTerm = string.Empty;
+    private int? selectedLineaId = null;
+
+    private List<EmpleadoGetDTO> empleadosFiltrados => empleados
+        .Where(e => string.IsNullOrEmpty(searchTerm) || 
+                    e.Nombre.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    e.Apellido.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+        .Where(e => !selectedLineaId.HasValue || e.LineaId == selectedLineaId.Value)
+        .OrderBy(e => e.Nombre)
+        .ToList();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarDatos();
+    }
+
+    private async Task CargarDatos()
+    {
+        try
+        {
+            cargando = true;
+            StateHasChanged();
+
+            var empleadosResponse = await empleadoService.GetEmpleados();
+            var lineasResponse = await empleadoService.GetLineas();
+
+            if (!empleadosResponse.Error)
+            {
+                empleados = empleadosResponse.Response ?? new();
+            }
+            else
+            {
+                Snackbar.Add("Error al cargar empleados", Severity.Error);
+            }
+
+            if (!lineasResponse.Error)
+            {
+                lineas = lineasResponse.Response ?? new();
+            }
+            else
+            {
+                Snackbar.Add("Error al cargar líneas", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error inesperado: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            cargando = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task AbrirCrear()
+    {
+        var modelo = new EmpleadoFormModel();
+
+        var parametros = new DialogParameters<EmpleadoFormDialog>
+        {
+            { x => x.Modelo, modelo },
+            { x => x.Lineas, lineas },
+            { x => x.IsEditMode, false }
+        };
+
+        var options = new DialogOptions 
+        { 
+            CloseButton = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<EmpleadoFormDialog>("Nuevo Empleado", parametros, options);
+        var resultado = await dialog.Result;
+
+        if (resultado is { Canceled: false })
+        {
+            var datos = (EmpleadoFormModel)resultado.Data!;
+
+            var post = new EmpleadoPostDTO
+            {
+                Nombre = CapitalizarNombre(datos.Nombre),
+                Apellido = CapitalizarNombre(datos.Apellido),
+                CostoMinutoBase = datos.CostoMinutoBase,
+                LineaId = datos.LineaId
+            };
+
+            var response = await empleadoService.PostEmpleado(post);
+
+            if (!response.Error)
+            {
+                Snackbar.Add($"✅ Empleado {datos.Nombre} {datos.Apellido} creado correctamente", Severity.Success);
+                await CargarDatos();
+            }
+            else
+            {
+                var error = await response.GetBody();
+                Snackbar.Add($"❌ Error: {error}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task AbrirEditar(EmpleadoGetDTO empleado)
+    {
+        var modelo = new EmpleadoFormModel
+        {
+            Id = empleado.Id,
+            Nombre = empleado.Nombre,
+            Apellido = empleado.Apellido,
+            CostoMinutoBase = empleado.CostoMinutoBase,
+            LineaId = empleado.LineaId
+        };
+
+        var parametros = new DialogParameters<EmpleadoFormDialog>
+        {
+            { x => x.Modelo, modelo },
+            { x => x.Lineas, lineas },
+            { x => x.IsEditMode, true }
+        };
+
+        var options = new DialogOptions 
+        { 
+            CloseButton = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<EmpleadoFormDialog>("Editar Empleado", parametros, options);
+        var resultado = await dialog.Result;
+
+        if (resultado is { Canceled: false })
+        {
+            var datos = (EmpleadoFormModel)resultado.Data!;
+
+            var put = new EmpleadoPutDTO
+            {
+                Id = datos.Id,
+                Nombre = CapitalizarNombre(datos.Nombre),
+                Apellido = CapitalizarNombre(datos.Apellido),
+                CostoMinutoBase = datos.CostoMinutoBase,
+                LineaId = datos.LineaId
+            };
+
+            var response = await empleadoService.PutEmpleado(datos.Id, put);
+
+            if (!response.Error)
+            {
+                Snackbar.Add($"✏️ Empleado {datos.Nombre} {datos.Apellido} actualizado correctamente", Severity.Success);
+                await CargarDatos();
+            }
+            else
+            {
+                var error = await response.GetBody();
+                Snackbar.Add($"❌ Error: {error}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task Eliminar(EmpleadoGetDTO empleado)
+    {
+        var confirmar = await DialogService.ShowMessageBoxAsync(
+            title: "Confirmar eliminación",
+            message: $"¿Está seguro que desea eliminar a {empleado.Nombre} {empleado.Apellido}?",
+            yesText: "Sí, eliminar", 
+            cancelText: "Cancelar",
+            options: new DialogOptions { CloseButton = true });
+
+        if (confirmar == true)
+        {
+            var response = await empleadoService.DeleteEmpleado(empleado.Id);
+
+            if (!response.Error)
+            {
+                Snackbar.Add($"🗑️ Empleado {empleado.Nombre} {empleado.Apellido} eliminado correctamente", Severity.Success);
+                await CargarDatos();
+            }
+            else
+            {
+                Snackbar.Add("❌ Error al eliminar el empleado", Severity.Error);
+            }
+        }
+    }
+
+    private string CapitalizarNombre(string nombre)
+    {
+        if (string.IsNullOrEmpty(nombre)) return nombre;
+        return char.ToUpper(nombre[0]) + nombre[1..].ToLower();
+    }
+}
