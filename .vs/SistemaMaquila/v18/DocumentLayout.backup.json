@@ -3,32 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\controllers\\operacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\controllers\\operacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\controllers\\inventariolineacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\controllers\\inventariolineacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\servicios\\operacionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\servicios\\operacionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\inventariolineafolder\\inventariolineaputdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\inventariolineafolder\\inventariolineaputdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\operacionfolder\\operaciongetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\operacionfolder\\operaciongetdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\controllers\\lineacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\controllers\\lineacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\pages\\cruds\\operacionfolder\\operacion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\pages\\cruds\\operacionfolder\\operacion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\servicios\\lineaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\servicios\\lineaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\pages\\cruds\\lineafolder\\lineaformdialog.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\pages\\cruds\\lineafolder\\lineaformdialog.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\pages\\cruds\\operacionfolder\\operacionformdialog.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\pages\\cruds\\operacionfolder\\operacionformdialog.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\servicios\\empleadoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\servicios\\empleadoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.server\\sistemamaquila.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{BEF88882-A627-4575-9272-3263B8156186}|SistemaMaquila.Server\\SistemaMaquila.Server.csproj|solutionrelative:sistemamaquila.server\\sistemamaquila.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\pages\\cruds\\empleado.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\pages\\cruds\\empleado.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\inventariolineafolder\\inventariolinea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\inventariolineafolder\\inventariolinea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.shared\\entidades\\empleadofolder\\empleado.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5730B624-C49E-4299-9B27-BE3694AA90C3}|SistemaMaquila.Shared\\SistemaMaquila.Shared.csproj|solutionrelative:sistemamaquila.shared\\entidades\\empleadofolder\\empleado.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|c:\\users\\augusto.ojeda\\source\\repos\\sistemamaquila\\sistemamaquila.client\\pages\\cruds\\lineafolder\\linea.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{118230C2-9793-4E30-8539-2A13CCED02C5}|SistemaMaquila.Client\\SistemaMaquila.Client.csproj|solutionrelative:sistemamaquila.client\\pages\\cruds\\lineafolder\\linea.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,97 +54,149 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "OperacionGetDTO.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionFolder\\OperacionGetDTO.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\OperacionFolder\\OperacionGetDTO.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\OperacionFolder\\OperacionGetDTO.cs",
-              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\OperacionFolder\\OperacionGetDTO.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBYAAAAtAAAAAAAAAA==",
+              "Title": "LineaController.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\LineaController.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Server\\Controllers\\LineaController.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\LineaController.cs",
+              "RelativeToolTip": "SistemaMaquila.Server\\Controllers\\LineaController.cs",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAowI4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T18:46:59.876Z",
+              "WhenOpened": "2026-06-23T13:27:27.471Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "OperacionService.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Servicios\\OperacionService.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Servicios\\OperacionService.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Servicios\\OperacionService.cs",
-              "RelativeToolTip": "SistemaMaquila.Client\\Servicios\\OperacionService.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAIAwwBQAAAAAAAAAAAAAAA==",
+              "Title": "InventarioLineaPutDTO.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\InventarioLineaFolder\\InventarioLineaPutDTO.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\InventarioLineaFolder\\InventarioLineaPutDTO.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\InventarioLineaFolder\\InventarioLineaPutDTO.cs",
+              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\InventarioLineaFolder\\InventarioLineaPutDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T18:31:58.309Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "OperacionController.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\OperacionController.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Server\\Controllers\\OperacionController.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\OperacionController.cs",
-              "RelativeToolTip": "SistemaMaquila.Server\\Controllers\\OperacionController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAlwBwAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T18:31:30.195Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Home.razor",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\Home.razor",
-              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Pages\\Home.razor",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\Home.razor",
-              "RelativeToolTip": "SistemaMaquila.Client\\Pages\\Home.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-06-11T18:12:19.948Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Program.cs",
-              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Program.cs",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Program.cs",
-              "RelativeToolTip": "SistemaMaquila.Client\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T17:43:48.221Z",
+              "WhenOpened": "2026-06-23T13:26:18.322Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "OperacionFormDialog.razor",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\OperacionFormDialog.razor",
-              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\OperacionFormDialog.razor",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\OperacionFormDialog.razor",
-              "RelativeToolTip": "SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\OperacionFormDialog.razor",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAwwIYAAAAJAAAAAAAAAA==",
+              "Title": "EmpleadoService.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Servicios\\EmpleadoService.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Servicios\\EmpleadoService.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Servicios\\EmpleadoService.cs",
+              "RelativeToolTip": "SistemaMaquila.Client\\Servicios\\EmpleadoService.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-23T13:12:08.703Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SistemaMaquila.Server",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\SistemaMaquila.Server.csproj",
+              "RelativeDocumentMoniker": "SistemaMaquila.Server\\SistemaMaquila.Server.csproj",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\SistemaMaquila.Server.csproj",
+              "RelativeToolTip": "SistemaMaquila.Server\\SistemaMaquila.Server.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-06-23T13:05:56.138Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Empleado.razor",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\Empleado.razor",
+              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Pages\\CRUDS\\Empleado.razor",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\Empleado.razor",
+              "RelativeToolTip": "SistemaMaquila.Client\\Pages\\CRUDS\\Empleado.razor",
+              "ViewState": "AgIAACIBAAAAAAAAAIAwwDABAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-06-11T17:02:04.444Z",
+              "WhenOpened": "2026-06-23T13:05:03.905Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Operacion.razor",
-              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\Operacion.razor",
-              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\Operacion.razor",
-              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\Operacion.razor",
-              "RelativeToolTip": "SistemaMaquila.Client\\Pages\\CRUDS\\OperacionFolder\\Operacion.razor",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAAABABAAAOAAAAAAAAAA==",
+              "Title": "LineaService.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Servicios\\LineaService.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Servicios\\LineaService.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Servicios\\LineaService.cs",
+              "RelativeToolTip": "SistemaMaquila.Client\\Servicios\\LineaService.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAhwCUAAABaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-23T12:52:28.114Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "InventarioLineaController.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\InventarioLineaController.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Server\\Controllers\\InventarioLineaController.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Server\\Controllers\\InventarioLineaController.cs",
+              "RelativeToolTip": "SistemaMaquila.Server\\Controllers\\InventarioLineaController.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAwwFUAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-23T12:53:16.393Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LineaFormDialog.razor",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\LineaFolder\\LineaFormDialog.razor",
+              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Pages\\CRUDS\\LineaFolder\\LineaFormDialog.razor",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\LineaFolder\\LineaFormDialog.razor",
+              "RelativeToolTip": "SistemaMaquila.Client\\Pages\\CRUDS\\LineaFolder\\LineaFormDialog.razor",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAAAJQAAABcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-06-11T17:02:03.934Z",
+              "WhenOpened": "2026-06-23T12:48:17.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Empleado.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\Empleado.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\Empleado.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\Empleado.cs",
+              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\EmpleadoFolder\\Empleado.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-23T13:04:57.275Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Linea.razor",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\LineaFolder\\Linea.razor",
+              "RelativeDocumentMoniker": "SistemaMaquila.Client\\Pages\\CRUDS\\LineaFolder\\Linea.razor",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Client\\Pages\\CRUDS\\LineaFolder\\Linea.razor",
+              "RelativeToolTip": "SistemaMaquila.Client\\Pages\\CRUDS\\LineaFolder\\Linea.razor",
+              "ViewState": "AgIAAKgAAAAAAAAAAAAjwLoAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-23T13:00:14.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "InventarioLinea.cs",
+              "DocumentMoniker": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\InventarioLineaFolder\\InventarioLinea.cs",
+              "RelativeDocumentMoniker": "SistemaMaquila.Shared\\Entidades\\InventarioLineaFolder\\InventarioLinea.cs",
+              "ToolTip": "C:\\Users\\augusto.ojeda\\source\\repos\\SistemaMaquila\\SistemaMaquila.Shared\\Entidades\\InventarioLineaFolder\\InventarioLinea.cs",
+              "RelativeToolTip": "SistemaMaquila.Shared\\Entidades\\InventarioLineaFolder\\InventarioLinea.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-23T12:51:25.626Z",
               "EditorCaption": ""
             }
           ]

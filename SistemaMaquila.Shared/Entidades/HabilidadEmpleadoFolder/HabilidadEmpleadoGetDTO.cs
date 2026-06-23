@@ -12,6 +12,7 @@ namespace SistemaMaquila.Shared.Entidades.HabilidadEmpleadoFolder
         public string Empleado { get; set; }
         public int OperacionId { get; set; }
         public string Operacion { get; set; }
+        public string TipoMaquina { get; set; }
         public decimal EficienciaSocio { get; set; }
     
         public static HabilidadEmpleadoGetDTO EntityToDto(HabilidadEmpleado ent)
@@ -23,7 +24,8 @@ namespace SistemaMaquila.Shared.Entidades.HabilidadEmpleadoFolder
                 Empleado = $"{ent.Empleado.Nombre} {ent.Empleado.Apellido}",
                 OperacionId = ent.OperacionId,
                 Operacion = ent.Operacion.Descripcion,
-                EficienciaSocio = ent.EficienciaSocio
+                EficienciaSocio = ent.EficienciaSocio,
+                TipoMaquina = ent.Operacion.TipoMaquina.Nombre
             }; 
 
         }

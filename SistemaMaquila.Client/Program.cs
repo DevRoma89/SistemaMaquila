@@ -18,5 +18,8 @@ builder.Services.AddScoped<EmpleadoService>();
 builder.Services.AddScoped<LineaService>();
 builder.Services.AddScoped<OperacionService>();
 builder.Services.AddScoped<TipoMaquinaService>();
+builder.Services.AddScoped<HabilidadEmpleadoService>();
+builder.Services.AddScoped<PrendaService>();
+builder.Services.AddScoped<PlanificadorService>();
 
 await builder.Build().RunAsync();

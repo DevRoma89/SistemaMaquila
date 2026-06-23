@@ -1,0 +1,427 @@
+﻿@page "/planificacion"
+@inject PlanificadorService planificadorService
+@inject PrendaService prendaService
+@inject EmpleadoService empleadoService
+@inject ISnackbar Snackbar
+
+<PageTitle>Planificación Diaria</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+
+    <!-- Encabezado -->
+    <MudText Typo="Typo.h5" Class="font-weight-bold mb-1">
+        <MudIcon Icon="@Icons.Material.Filled.Dashboard" Class="mr-2" Color="Color.Primary" />
+        Planificación Diaria
+    </MudText>
+    <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+        Estimación de capacidad, maquinaria y operarios para producir una prenda en un día
+    </MudText>
+
+    <!-- Panel de parámetros -->
+    <MudCard Elevation="3" Class="mb-4">
+        <MudCardContent>
+            <MudGrid AlignItems="AlignItems.End">
+                <MudItem xs="12" sm="4">
+                    <MudSelect T="int?" @bind-Value="selectedPrendaId"
+                               Label="Prenda"
+                               Variant="Variant.Outlined"
+                               Adornment="Adornment.Start"
+                               AdornmentIcon="@Icons.Material.Filled.Checkroom"
+                               Margin="Margin.Dense">
+                        <MudSelectItem T="int?" Value="null">Seleccionar prenda...</MudSelectItem>
+                        @foreach (var p in prendas)
+                        {
+                            <MudSelectItem T="int?" Value="@((int?)p.Id)">
+                                @p.Nombre <MudText Typo="Typo.caption" Class="ml-1">(@p.Codigo)</MudText>
+                            </MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudSelect T="int?" @bind-Value="selectedLineaId"
+                               Label="Línea de producción"
+                               Variant="Variant.Outlined"
+                               Adornment="Adornment.Start"
+                               AdornmentIcon="@Icons.Material.Filled.Factory"
+                               Margin="Margin.Dense">
+                        <MudSelectItem T="int?" Value="null">Seleccionar línea...</MudSelectItem>
+                        @foreach (var l in lineas)
+                        {
+                            <MudSelectItem T="int?" Value="@((int?)l.Id)">@l.Nombre</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="3">
+                    <MudNumericField @bind-Value="unidadesObjetivo"
+                                     Label="Unidades objetivo"
+                                     Variant="Variant.Outlined"
+                                     Adornment="Adornment.Start"
+                                     AdornmentIcon="@Icons.Material.Filled.Inventory"
+                                     Margin="Margin.Dense"
+                                     Min="1" Max="99999" Step="10" />
+                </MudItem>
+                <MudItem xs="12" sm="1">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               FullWidth="true"
+                               StartIcon="@Icons.Material.Filled.Calculate"
+                               OnClick="Calcular"
+                               Disabled="@(cargando || !selectedPrendaId.HasValue || !selectedLineaId.HasValue || unidadesObjetivo <= 0)">
+                        Calcular
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    @if (cargando)
+    {
+        <div class="d-flex justify-center pa-8">
+            <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+            <MudText Class="ml-3 align-self-center">Calculando planificación...</MudText>
+        </div>
+    }
+    else if (resultado != null)
+    {
+        <!-- Alerta de viabilidad -->
+        <MudAlert Severity="@(resultado.Maquinaria.LineaPuedeProducirPrenda ? Severity.Success : Severity.Warning)"
+                  Variant="Variant.Filled" Class="mb-4">
+            @if (resultado.Maquinaria.LineaPuedeProducirPrenda)
+            {
+                <MudText><strong>✅ La línea @resultado.Linea.Nombre puede producir @unidadesObjetivo unidades de @resultado.Prenda.Nombre en una jornada.</strong></MudText>
+            }
+            else
+            {
+                <MudText><strong>⚠️ La línea @resultado.Linea.Nombre no tiene suficiente maquinaria para cubrir la demanda de @unidadesObjetivo unidades.</strong></MudText>
+            }
+        </MudAlert>
+
+        <!-- KPIs principales -->
+        <MudGrid Class="mb-4">
+
+            <!-- Capacidad real vs objetivo -->
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Elevation="2" Style="height:100%">
+                    <MudCardContent Class="d-flex flex-column align-center pa-4">
+                        <MudIcon Icon="@Icons.Material.Filled.Speed"
+                                 Color="@(resultado.Capacidad.UnidadesEstimadasPorDia >= unidadesObjetivo ? Color.Success : Color.Warning)"
+                                 Size="Size.Large" Class="mb-2" />
+                        <MudText Typo="Typo.h4" Class="font-weight-bold">
+                            @resultado.Capacidad.UnidadesEstimadasPorDia.ToString("F0")
+                        </MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="text-center">
+                            Unidades posibles / día
+                        </MudText>
+                        <MudChip T="string" Size="Size.Small" Class="mt-2"
+                                 Color="@(resultado.Capacidad.UnidadesEstimadasPorDia >= unidadesObjetivo ? Color.Success : Color.Warning)"
+                                 Variant="Variant.Outlined">
+                            Objetivo: @unidadesObjetivo
+                        </MudChip>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <!-- Operarios en línea -->
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Elevation="2" Style="height:100%">
+                    <MudCardContent Class="d-flex flex-column align-center pa-4">
+                        <MudIcon Icon="@Icons.Material.Filled.People"
+                                 Color="Color.Primary" Size="Size.Large" Class="mb-2" />
+                        <MudText Typo="Typo.h4" Class="font-weight-bold">
+                            @resultado.Linea.CantidadEmpleados
+                        </MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="text-center">
+                            Operarios en la línea
+                        </MudText>
+                        <MudChip T="string" Size="Size.Small" Class="mt-2"
+                                 Color="Color.Info" Variant="Variant.Outlined">
+                            Efic. @resultado.Linea.EficienciaHistorica.ToString("P0")
+                        </MudChip>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <!-- SAM ajustado -->
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Elevation="2" Style="height:100%">
+                    <MudCardContent Class="d-flex flex-column align-center pa-4">
+                        <MudIcon Icon="@Icons.Material.Filled.Timer"
+                                 Color="Color.Secondary" Size="Size.Large" Class="mb-2" />
+                        <MudText Typo="Typo.h4" Class="font-weight-bold">
+                            @resultado.SAM.SamAjustadoEficiencia.ToString("F2")
+                        </MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="text-center">
+                            SAM real por unidad (min)
+                        </MudText>
+                        <MudChip T="string" Size="Size.Small" Class="mt-2"
+                                 Color="Color.Default" Variant="Variant.Outlined">
+                            SAM puro: @resultado.SAM.SamTotalPuro.ToString("F2") min
+                        </MudChip>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <!-- Costo por unidad -->
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard Elevation="2" Style="height:100%">
+                    <MudCardContent Class="d-flex flex-column align-center pa-4">
+                        <MudIcon Icon="@Icons.Material.Filled.AttachMoney"
+                                 Color="Color.Success" Size="Size.Large" Class="mb-2" />
+                        <MudText Typo="Typo.h4" Class="font-weight-bold">
+                            @resultado.Costos.CostoPorUnidad.ToString("C")
+                        </MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="text-center">
+                            Costo M.O. por unidad
+                        </MudText>
+                        <MudChip T="string" Size="Size.Small" Class="mt-2"
+                                 Color="Color.Success" Variant="Variant.Outlined">
+                            Total lote: @((resultado.Costos.CostoPorUnidad * unidadesObjetivo).ToString("C"))
+                        </MudChip>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+        </MudGrid>
+
+        <MudGrid>
+
+            <!-- Tabla de maquinaria por tipo -->
+            <MudItem xs="12" md="6">
+                <MudCard Elevation="2" Style="height:100%">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">
+                                <MudIcon Icon="@Icons.Material.Filled.PrecisionManufacturing"
+                                         Class="mr-1" Color="Color.Primary" />
+                                Maquinaria requerida
+                            </MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                Para @unidadesObjetivo unidades en jornada de 480 min
+                            </MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudTable Items="@resultado.Maquinaria.DetallePorTipo"
+                                  Dense="true" Hover="true" Elevation="0" Bordered="true">
+                            <HeaderContent>
+                                <MudTh>Tipo de máquina</MudTh>
+                                <MudTh>Necesarias</MudTh>
+                                <MudTh>Disponibles</MudTh>
+                                <MudTh>Estado</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Tipo">
+                                    <MudText Typo="Typo.body2">@context.NombreMaquina</MudText>
+                                </MudTd>
+                                <MudTd DataLabel="Necesarias">
+                                    <MudChip T="string" Size="Size.Small"
+                                             Color="Color.Primary" Variant="Variant.Filled">
+                                        @context.MaquinasNecesarias
+                                    </MudChip>
+                                </MudTd>
+                                <MudTd DataLabel="Disponibles">
+                                    <MudChip T="string" Size="Size.Small"
+                                             Color="@(context.CubreCapacidad ? Color.Success : Color.Error)"
+                                             Variant="Variant.Outlined">
+                                        @context.MaquinasDisponibles
+                                    </MudChip>
+                                </MudTd>
+                                <MudTd DataLabel="Estado">
+                                    @if (context.CubreCapacidad)
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Filled">
+                                            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Small" Class="mr-1" />
+                                            OK
+                                        </MudChip>
+                                    }
+                                    else
+                                    {
+                                        <MudTooltip Text="@($"Faltan {context.MaquinasNecesarias - context.MaquinasDisponibles} máquina(s)")" Arrow>
+                                            <MudChip T="string" Size="Size.Small" Color="Color.Error" Variant="Variant.Filled">
+                                                <MudIcon Icon="@Icons.Material.Filled.Warning" Size="Size.Small" Class="mr-1" />
+                                                Déficit
+                                            </MudChip>
+                                        </MudTooltip>
+                                    }
+                                </MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <!-- Resumen de costos y capacidad -->
+            <MudItem xs="12" md="6">
+                <MudCard Elevation="2" Style="height:100%">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">
+                                <MudIcon Icon="@Icons.Material.Filled.Analytics"
+                                         Class="mr-1" Color="Color.Secondary" />
+                                Resumen de la línea
+                            </MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                @resultado.Linea.Nombre — @resultado.Prenda.Nombre
+                            </MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudList T="string" Dense="true">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.Timer">
+                                <MudText Typo="Typo.body2">
+                                    Minutos disponibles/día:
+                                    <strong>@resultado.Capacidad.MinutosDisponiblesDia.ToString("F0") min</strong>
+                                </MudText>
+                            </MudListItem>
+                            <MudDivider />
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.TrendingUp">
+                                <MudText Typo="Typo.body2">
+                                    Eficiencia histórica:
+                                    <strong>@resultado.Linea.EficienciaHistorica.ToString("P0")</strong>
+                                </MudText>
+                            </MudListItem>
+                            <MudDivider />
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.AttachMoney">
+                                <MudText Typo="Typo.body2">
+                                    Costo/min promedio operario:
+                                    <strong>@resultado.Costos.CostoMinutoPromedioOperario.ToString("C4")</strong>
+                                </MudText>
+                            </MudListItem>
+                            <MudDivider />
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.MonetizationOn">
+                                <MudText Typo="Typo.body2">
+                                    Costo/min real planta:
+                                    <strong>@resultado.Costos.CostoMinutoRealPlanta.ToString("C4")</strong>
+                                </MudText>
+                            </MudListItem>
+                            <MudDivider />
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.Inventory">
+                                <MudText Typo="Typo.body2">
+                                    Operaciones en la prenda:
+                                    <strong>@resultado.Prenda.TotalOperaciones</strong>
+                                </MudText>
+                            </MudListItem>
+                            <MudDivider />
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.Calculate">
+                                <MudText Typo="Typo.body2">
+                                    Costo total lote (@unidadesObjetivo und.):
+                                    <strong>@((resultado.Costos.CostoPorUnidad * unidadesObjetivo).ToString("C"))</strong>
+                                </MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <!-- Gráfico de carga por tipo de máquina -->
+            <MudItem xs="12">
+                <MudCard Elevation="2" Class="mt-0">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">
+                                <MudIcon Icon="@Icons.Material.Filled.BarChart"
+                                         Class="mr-1" Color="Color.Primary" />
+                                Carga por tipo de máquina
+                            </MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                Máquinas necesarias vs disponibles en la línea
+                            </MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        @foreach (var maq in resultado.Maquinaria.DetallePorTipo)
+                        {
+                            var pctUso = maq.MaquinasDisponibles > 0
+                                ? Math.Min((double)maq.MaquinasNecesarias / maq.MaquinasDisponibles * 100, 100)
+                                : 100;
+                            var colorBarra = pctUso >= 100 ? Color.Error
+                                           : pctUso >= 80 ? Color.Warning
+                                           : Color.Success;
+
+                            <div class="mb-3">
+                                <div class="d-flex justify-space-between mb-1">
+                                    <MudText Typo="Typo.body2">
+                                        <strong>@maq.NombreMaquina</strong>
+                                    </MudText>
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        @maq.MaquinasNecesarias necesarias / @maq.MaquinasDisponibles disponibles
+                                    </MudText>
+                                </div>
+                                <MudProgressLinear Value="@pctUso"
+                                                   Color="@colorBarra"
+                                                   Rounded="true"
+                                                   Size="Size.Large"
+                                                   Class="mb-1" />
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    @(pctUso >= 100
+                                        ? $"⚠️ Capacidad insuficiente — faltan {maq.MaquinasNecesarias - maq.MaquinasDisponibles} máquina(s)"
+                                        : $"✅ Uso estimado: {pctUso:F0}%")
+                                </MudText>
+                            </div>
+                        }
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+        </MudGrid>
+    }
+    else if (hasBuscado)
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined">
+            No se pudo obtener la planificación. Verificá que la prenda tenga operaciones y la línea tenga empleados.
+        </MudAlert>
+    }
+
+</MudContainer>
+
+@code {
+    private List<PrendaGetDTO> prendas = new();
+    private List<LineaGetDTO> lineas = new();
+
+    private int? selectedPrendaId = null;
+    private int? selectedLineaId = null;
+    private int unidadesObjetivo = 100;
+
+    private bool cargando = false;
+    private bool hasBuscado = false;
+    private PlanificacionDiariaResultDTO? resultado = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var pResp = await prendaService.GetPrendas();
+        var lResp = await empleadoService.GetLineas();
+        if (!pResp.Error) prendas = pResp.Response ?? new();
+        if (!lResp.Error) lineas = lResp.Response ?? new();
+    }
+
+    private async Task Calcular()
+    {
+        if (!selectedPrendaId.HasValue || !selectedLineaId.HasValue) return;
+
+        try
+        {
+            cargando = true;
+            hasBuscado = true;
+            resultado = null;
+            StateHasChanged();
+
+            var resp = await planificadorService.GetSamPrenda(
+                selectedPrendaId.Value,
+                selectedLineaId.Value);
+
+            if (!resp.Error)
+                resultado = resp.Response;
+            else
+                Snackbar.Add("Error al calcular la planificación", Severity.Error);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error inesperado: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            cargando = false;
+            StateHasChanged();
+        }
+    }
+}

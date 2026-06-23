@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemaMaquila.Shared.Entidades.EmpleadoFolder;
+using SistemaMaquila.Shared.Entidades.HabilidadEmpleadoFolder;
 using SistemaMaquila.Shared.Servicios;
 
 namespace SistemaMaquila.Server.Controllers
@@ -28,6 +29,7 @@ namespace SistemaMaquila.Server.Controllers
                                     .ToListAsync();
 
         }
+        
 
         [HttpPost]
         public async Task<ActionResult<Empleado>> Post([FromBody] EmpleadoPostDTO dto)

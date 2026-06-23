@@ -1,0 +1,401 @@
+﻿@inject ISnackbar Snackbar
+@inject PrendaService prendaService
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6" Class="d-flex align-center">
+            <MudIcon Icon="@(IsEditMode ? Icons.Material.Filled.Edit : Icons.Material.Filled.Add)"
+                     Color="@(IsEditMode ? Color.Primary : Color.Success)"
+                     Class="mr-2" />
+            @(IsEditMode ? "Editar Prenda" : "Nueva Prenda")
+        </MudText>
+    </TitleContent>
+
+    <DialogContent>
+        @if (IsEditMode)
+        {
+            <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pt-4">
+                <MudTabPanel Text="Datos generales" Icon="@Icons.Material.Filled.Checkroom">
+                    @FormDatosGenerales
+                </MudTabPanel>
+                <MudTabPanel Text="Operaciones" Icon="@Icons.Material.Filled.Build"
+                             BadgeData="@(operaciones.Count > 0 ? operaciones.Count.ToString() : null)"
+                             BadgeColor="Color.Primary">
+                    @FormOperaciones
+                </MudTabPanel>
+            </MudTabs>
+        }
+        else
+        {
+            @FormDatosGenerales
+        }
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="Cancelar"
+                   StartIcon="@Icons.Material.Filled.Close">
+            Cancelar
+        </MudButton>
+        <MudButton Variant="Variant.Filled"
+                   Color="@(IsEditMode ? Color.Primary : Color.Success)"
+                   OnClick="Guardar"
+                   StartIcon="@(IsEditMode ? Icons.Material.Filled.Save : Icons.Material.Filled.Check)"
+                   Disabled="@(string.IsNullOrEmpty(Modelo.Nombre) || string.IsNullOrEmpty(Modelo.Codigo))">
+            @(IsEditMode ? "Actualizar" : "Crear")
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public PrendaGetDTO Modelo { get; set; } = new();
+    [Parameter] public bool IsEditMode { get; set; } = false;
+
+    private MudForm form = default!;
+    private List<OperacionPrendaGetDTO> operaciones = new();
+    private List<OperacionGetDTO> operacionesBase = new();
+    private bool cargandoOperaciones = false;
+
+    private bool mostrarFormOperacion = false;
+    private bool editandoOperacion = false;
+    private OperacionPrendaGetDTO opActual = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (IsEditMode) await CargarOperaciones();
+    }
+
+    private async Task CargarOperaciones()
+    {
+        cargandoOperaciones = true;
+        var opResp = await prendaService.GetOperacionesPorPrenda(Modelo.Id);
+        var baseResp = await prendaService.GetOperaciones();
+        if (!opResp.Error) operaciones = opResp.Response ?? new();
+        if (!baseResp.Error) operacionesBase = baseResp.Response ?? new();
+        cargandoOperaciones = false;
+    }
+
+    private async Task Guardar()
+    {
+        await form.ValidateAsync();
+        if (!form.IsValid || !ValidarDatos()) return;
+        MudDialog.Close(DialogResult.Ok(Modelo));
+    }
+
+    private bool ValidarDatos()
+    {
+        if (string.IsNullOrWhiteSpace(Modelo.Nombre))
+        { Snackbar.Add("El nombre es obligatorio", Severity.Error); return false; }
+        if (string.IsNullOrWhiteSpace(Modelo.Codigo))
+        { Snackbar.Add("El código es obligatorio", Severity.Error); return false; }
+        if (Modelo.TiempoCambioLineaMinutos < 0)
+        { Snackbar.Add("El tiempo de cambio no puede ser negativo", Severity.Error); return false; }
+        return true;
+    }
+
+    private void Cancelar() => MudDialog.Cancel();
+
+    // ── CRUD Operaciones de prenda ───────────────
+    private void AbrirNuevaOperacion()
+    {
+        // Siguiente número de secuencia automático
+        var siguienteOrden = operaciones.Any() ? operaciones.Max(o => o.OrdenSecuencia) + 1 : 1;
+        opActual = new OperacionPrendaGetDTO { OrdenSecuencia = siguienteOrden };
+        editandoOperacion = false;
+        mostrarFormOperacion = true;
+    }
+
+    private void AbrirEditarOperacion(OperacionPrendaGetDTO op)
+    {
+        opActual = new OperacionPrendaGetDTO
+        {
+            Id = op.Id,
+            OperacionId = op.OperacionId,
+            OrdenSecuencia = op.OrdenSecuencia,
+            SAMReal = op.SAMReal
+        };
+        editandoOperacion = true;
+        mostrarFormOperacion = true;
+    }
+
+    private void CancelarFormOperacion()
+    {
+        mostrarFormOperacion = false;
+        opActual = new();
+    }
+
+    private async Task GuardarOperacion()
+    {
+        if (opActual.OperacionId <= 0)
+        { Snackbar.Add("Debe seleccionar una operación", Severity.Warning); return; }
+        if (opActual.SAMReal <= 0)
+        { Snackbar.Add("El SAM debe ser mayor a 0", Severity.Warning); return; }
+        if (opActual.OrdenSecuencia <= 0)
+        { Snackbar.Add("El orden de secuencia debe ser mayor a 0", Severity.Warning); return; }
+
+        if (!editandoOperacion && operaciones.Any(o => o.OperacionId == opActual.OperacionId))
+        { Snackbar.Add("Esa operación ya está asignada a la prenda", Severity.Warning); return; }
+
+        if (editandoOperacion)
+        {
+            var dto = new OperacionPrendaPutDTO
+            {
+                Id = opActual.Id,
+                PrendaId = Modelo.Id,
+                OperacionId = opActual.OperacionId,
+                OrdenSecuencia = opActual.OrdenSecuencia,
+                SAMReal = opActual.SAMReal
+            };
+            var resp = await prendaService.PutOperacionPrenda(opActual.Id, dto);
+            if (!resp.Error) Snackbar.Add("Operación actualizada", Severity.Success);
+            else { Snackbar.Add("Error al actualizar la operación", Severity.Error); return; }
+        }
+        else
+        {
+            var dto = new OperacionPrendaPostDTO
+            {
+                PrendaId = Modelo.Id,
+                OperacionId = opActual.OperacionId,
+                OrdenSecuencia = opActual.OrdenSecuencia,
+                SAMReal = opActual.SAMReal
+            };
+            var resp = await prendaService.PostOperacionPrenda(dto);
+            if (!resp.Error) Snackbar.Add("Operación agregada", Severity.Success);
+            else { Snackbar.Add("Error al agregar la operación", Severity.Error); return; }
+        }
+
+        mostrarFormOperacion = false;
+        await CargarOperaciones();
+    }
+
+    private async Task EliminarOperacion(OperacionPrendaGetDTO op)
+    {
+        var resp = await prendaService.DeleteOperacionPrenda(op.Id);
+        if (!resp.Error)
+        {
+            Snackbar.Add($"Operación '{op.Operacion}' eliminada", Severity.Success);
+            await CargarOperaciones();
+        }
+        else Snackbar.Add("Error al eliminar la operación", Severity.Error);
+    }
+
+    private void OnOperacionSeleccionada(int operacionId)
+    {
+        opActual.OperacionId = operacionId;
+
+        // Solo precarga el SAM en modo creación, no sobreescribe en edición
+        if (!editandoOperacion)
+        {
+            var operacionBase = operacionesBase.FirstOrDefault(o => o.Id == operacionId);
+            if (operacionBase != null)
+                opActual.SAMReal = operacionBase.SAMEstimado;
+        }
+    }
+
+    private IEnumerable<OperacionGetDTO> OperacionesDisponibles =>
+        editandoOperacion
+            ? operacionesBase
+            : operacionesBase.Where(o => operaciones.All(op => op.OperacionId != o.Id));
+
+    // ── RenderFragments ──────────────────────────
+    private RenderFragment FormDatosGenerales => __builder =>
+    {
+        <MudForm @ref="form" Model="@Modelo">
+            <MudGrid>
+                <MudItem xs="12" sm="8">
+                    <MudTextField @bind-Value="Modelo.Nombre"
+                                  Label="Nombre *"
+                                  Placeholder="Ej: Camisa Oxford"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Checkroom"
+                                  For="@(() => Modelo.Nombre)"
+                                  Required="true"
+                                  RequiredError="El nombre es obligatorio"
+                                  Immediate="true" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="Modelo.Codigo"
+                                  Label="Código *"
+                                  Placeholder="Ej: CAM-001"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Tag"
+                                  For="@(() => Modelo.Codigo)"
+                                  Required="true"
+                                  RequiredError="El código es obligatorio"
+                                  Immediate="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudNumericField @bind-Value="Modelo.TiempoCambioLineaMinutos"
+                                     Label="Tiempo de cambio de línea (min)"
+                                     Variant="Variant.Outlined"
+                                     Margin="Margin.Dense"
+                                     Adornment="Adornment.Start"
+                                     AdornmentIcon="@Icons.Material.Filled.Timer"
+                                     Min="0" Max="480" Step="5"
+                                     HelperText="Minutos para preparar la línea antes de producir" />
+                </MudItem>
+                @if (IsEditMode && Modelo.Id > 0)
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="mt-2">
+                            <MudText Typo="Typo.body2">
+                                Editando prenda con ID: <strong>@Modelo.Id</strong>
+                            </MudText>
+                        </MudAlert>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudForm>
+    };
+
+    private RenderFragment FormOperaciones => __builder =>
+    {
+        @if (cargandoOperaciones)
+        {
+            <div class="d-flex justify-center pa-6">
+                <MudProgressCircular Color="Color.Primary" Size="Size.Medium" />
+            </div>
+        }
+        else
+        {
+            <div class="d-flex justify-space-between align-center mb-3">
+                <div>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        @operaciones.Count operación(es) — SAM total:
+                        <strong>@operaciones.Sum(o => o.SAMReal).ToString("F2") min</strong>
+                    </MudText>
+                </div>
+                @if (!mostrarFormOperacion)
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               Size="Size.Small"
+                               StartIcon="@Icons.Material.Filled.Add"
+                               OnClick="AbrirNuevaOperacion"
+                               Disabled="@(!OperacionesDisponibles.Any())">
+                        Agregar operación
+                    </MudButton>
+                }
+            </div>
+
+            @if (mostrarFormOperacion)
+            {
+                <MudPaper Elevation="0" Class="pa-3 mb-3"
+                          Style="border: 1px solid var(--mud-palette-divider); border-radius: 8px;">
+                    <MudText Typo="Typo.subtitle2" Class="mb-2">
+                        @(editandoOperacion ? "Editar operación" : "Nueva operación")
+                    </MudText>
+                    <MudGrid>
+                        <MudItem xs="12" sm="6">
+                            <MudSelect T="int"
+                                       Value="opActual.OperacionId"
+                                       ValueChanged="@OnOperacionSeleccionada"
+                                       Label="Operación *"
+                                       Variant="Variant.Outlined"
+                                       Margin="Margin.Dense"
+                                       Disabled="@editandoOperacion">
+                                @foreach (var op in OperacionesDisponibles)
+                                {
+                                    <MudSelectItem Value="@op.Id">
+                                        @op.Descripcion
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary" Class="ml-1">
+                                            (@op.TipoMaquina)
+                                        </MudText>
+                                    </MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="6" sm="3">
+                            <MudNumericField @bind-Value="opActual.OrdenSecuencia"
+                                             Label="Orden *"
+                                             Variant="Variant.Outlined"
+                                             Margin="Margin.Dense"
+                                             Min="1" Max="999" Step="1"
+                                             HelperText="Secuencia en la línea" />
+                        </MudItem>
+                        <MudItem xs="6" sm="3">
+                            <MudNumericField @bind-Value="opActual.SAMReal"
+                                             Label="SAM Real (min) *"
+                                             Variant="Variant.Outlined"
+                                             Margin="Margin.Dense"
+                                             Min="0.01m" Max="999.99m" Step="0.01m"
+                                             Format="F2"
+                                             HelperText="Minutos por unidad" />
+                        </MudItem>
+                    </MudGrid>
+                    <div class="d-flex gap-2 mt-2">
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Success" Size="Size.Small"
+                                   StartIcon="@Icons.Material.Filled.Check"
+                                   OnClick="GuardarOperacion">
+                            @(editandoOperacion ? "Actualizar" : "Agregar")
+                        </MudButton>
+                        <MudButton Variant="Variant.Text" Size="Size.Small"
+                                   StartIcon="@Icons.Material.Filled.Close"
+                                   OnClick="CancelarFormOperacion">
+                            Cancelar
+                        </MudButton>
+                    </div>
+                </MudPaper>
+            }
+
+            @if (!operaciones.Any())
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                    Esta prenda no tiene operaciones definidas. El SAM total será 0.
+                </MudAlert>
+            }
+            else
+            {
+                <MudTable Items="@operaciones" Dense="true" Hover="true"
+                          Elevation="0" Bordered="true" Breakpoint="Breakpoint.None">
+                    <HeaderContent>
+                        <MudTh>Ord.</MudTh>
+                        <MudTh>Operación</MudTh>
+                        <MudTh>Máquina</MudTh>
+                        <MudTh>SAM Real</MudTh>
+                        <MudTh>Acciones</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Orden">
+                            <MudChip T="string" Size="Size.Small" Color="Color.Default" Variant="Variant.Text">
+                                #@context.OrdenSecuencia
+                            </MudChip>
+                        </MudTd>
+                        <MudTd DataLabel="Operación">
+                            <MudText Typo="Typo.body2">@context.Operacion</MudText>
+                        </MudTd>
+                        <MudTd DataLabel="Máquina">
+                            <MudChip T="string" Size="Size.Small" Color="Color.Default" Variant="Variant.Outlined">
+                                @context.TipoMaquina
+                            </MudChip>
+                        </MudTd>
+                        <MudTd DataLabel="SAM Real">
+                            <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                                @context.SAMReal.ToString("F2") min
+                            </MudChip>
+                        </MudTd>
+                        <MudTd DataLabel="Acciones">
+                            <MudTooltip Text="Editar" Arrow>
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                               Color="Color.Primary" Size="Size.Small"
+                                               OnClick="@(() => AbrirEditarOperacion(context))"
+                                               Disabled="@mostrarFormOperacion" />
+                            </MudTooltip>
+                            <MudTooltip Text="Eliminar" Arrow>
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                               Color="Color.Error" Size="Size.Small"
+                                               OnClick="@(() => EliminarOperacion(context))"
+                                               Disabled="@mostrarFormOperacion" />
+                            </MudTooltip>
+                        </MudTd>
+                    </RowTemplate>
+                </MudTable>
+            }
+        }
+    };
+}

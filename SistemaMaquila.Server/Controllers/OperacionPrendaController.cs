@@ -30,49 +30,62 @@ namespace SistemaMaquila.Server.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<ActionResult<OperacionPrenda>> Post([FromBody] OperacionPrendaPostDTO dto)
+        [HttpGet("por-prenda/{prendaId}")]
+        public async Task<ActionResult<List<OperacionPrendaGetDTO>>> GetPorPrenda(int prendaId)
         {
-
-            if (Validador.CampoNumerico(dto.SAMReal))
-            {
-                return BadRequest("Debe ingresar un numero mayor a 0");
-            }
-
-
-            var existePrenda = await context.Prendas.AnyAsync(x => x.Id == dto.PrendaId);
-
-            if (!existePrenda)
-            {
-                return NotFound("No se encontro una prenda con ese Id");
-            }
-
-            var existeOperacion = await context.Operaciones.AnyAsync(x => x.Id == dto.OperacionId); 
-
-            if (!existeOperacion)
-            {
-                return NotFound("No se encontro una operacion con ese Id");
-            }
-
-            var ent = OperacionPrendaPostDTO.DtoToEntity(dto);
-
-            context.OperacionPrendas.Add(ent);
-
-            await context.SaveChangesAsync();
-
-            return Ok(ent);
-
+            return await context.OperacionPrendas
+                .Include(op => op.Operacion)
+                    .ThenInclude(o => o.TipoMaquina)
+                .Where(op => op.PrendaId == prendaId && op.Visible)
+                .OrderBy(op => op.OrdenSecuencia)
+                .Select(op => OperacionPrendaGetDTO.EntityToDto(op))
+                .ToListAsync();
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Put()
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] OperacionPrendaPostDTO dto)
         {
+            // Validar que no se duplique la misma operación en la misma prenda
+            var existe = await context.OperacionPrendas
+                .AnyAsync(op => op.PrendaId == dto.PrendaId
+                             && op.OperacionId == dto.OperacionId
+                             && op.Visible);
+            if (existe) return BadRequest("Esa operación ya está asignada a la prenda.");
+
+            var ent = new OperacionPrenda
+            {
+                PrendaId = dto.PrendaId,
+                OperacionId = dto.OperacionId,
+                OrdenSecuencia = dto.OrdenSecuencia,
+                SAMReal = dto.SAMReal,
+                Visible = true
+            };
+            context.OperacionPrendas.Add(ent);
+            await context.SaveChangesAsync();
+            return Ok(ent);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] OperacionPrendaPutDTO dto)
+        {
+            if (id != dto.Id) return BadRequest("El Id no coincide.");
+            var ent = await context.OperacionPrendas.FirstOrDefaultAsync(x => x.Id == id);
+            if (ent == null) return NotFound();
+
+            ent.OperacionId = dto.OperacionId;
+            ent.OrdenSecuencia = dto.OrdenSecuencia;
+            ent.SAMReal = dto.SAMReal;
+            await context.SaveChangesAsync();
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
+            var ent = await context.OperacionPrendas.FirstOrDefaultAsync(x => x.Id == id);
+            if (ent == null) return NotFound();
+            ent.Visible = false;
+            await context.SaveChangesAsync();
             return Ok();
         }
 

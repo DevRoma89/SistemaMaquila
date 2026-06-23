@@ -23,8 +23,23 @@ namespace SistemaMaquila.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<InventarioLineaGetDTO>>> Get()
         {
+             
             return await context.InventarioLineas
+                                .Include(x=>x.Linea)
+                                .Include(x=>x.TipoMaquina)
                                 .Where(x => x.Visible == true)
+                                .Select(x => InventarioLineaGetDTO.EntityToDto(x))
+                                .ToListAsync();
+
+        }
+        [HttpGet("{lineaId:int}")]
+        public async Task<ActionResult<List<InventarioLineaGetDTO>>> Get([FromRoute] int lineaId )
+        {
+             
+            return await context.InventarioLineas
+                                .Include(x=>x.Linea)
+                                .Include(x=>x.TipoMaquina)
+                                .Where(x => x.Visible == true && x.LineaId == lineaId)
                                 .Select(x => InventarioLineaGetDTO.EntityToDto(x))
                                 .ToListAsync();
 
@@ -65,15 +80,38 @@ namespace SistemaMaquila.Server.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Put()
-        {
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, [FromBody] InventarioLineaPostDTO dto)
+        { 
+               
+            var ent = await context.InventarioLineas.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (ent == null)
+            {
+                return NotFound("No se encontro el Id de la Linea");
+            }
+            
+            ent.CantidadDisponible = dto.CantidadDisponible;
+
+            await context.SaveChangesAsync();
+
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
+            var ent = await context.InventarioLineas.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (ent == null)
+            {
+                return NotFound();
+            }
+
+            ent.Visible = false;
+
+            await context.SaveChangesAsync();
+
             return Ok();
         }
 

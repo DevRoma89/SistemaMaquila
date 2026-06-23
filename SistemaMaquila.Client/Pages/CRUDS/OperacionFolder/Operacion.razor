@@ -215,7 +215,8 @@
             var post = new OperacionPostDTO
             {
                 Descripcion = CapitalizarNombre(datos.Descripcion),
-                SAMEstimado = datos.SAMEstimado
+                SAMEstimado = datos.SAMEstimado,
+                TipoMaquinaId = datos.TipoMaquinaId
             };
 
             var response = await operacionService.PostOperaciones(post);

@@ -1,0 +1,255 @@
+﻿@page "/prendas"
+@inject PrendaService prendaService
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
+<PageTitle>Gestión de Prendas</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudCard Elevation="5">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h5" Class="font-weight-bold">
+                    <MudIcon Icon="@Icons.Material.Filled.Checkroom" Class="mr-2" Color="Color.Primary" />
+                    Gestión de Prendas
+                </MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                    Administra las prendas y sus operaciones de confección
+                </MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Add"
+                           OnClick="AbrirCrear">
+                    Nueva Prenda
+                </MudButton>
+            </CardHeaderActions>
+        </MudCardHeader>
+
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" md="8">
+                    <MudTextField @bind-Value="searchTerm"
+                                  Label="Buscar por nombre o código..."
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Search"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"
+                                  Class="mb-4" />
+                </MudItem>
+            </MudGrid>
+
+            <MudTable Items="@prendasFiltradas"
+                      Loading="@cargando"
+                      Bordered="true" Hover="true"
+                      Breakpoint="Breakpoint.Sm"
+                      Dense="true" Elevation="0">
+                <ToolBarContent>
+                    <MudText Typo="Typo.body2" Class="pa-2">
+                        Total: @prendasFiltradas.Count prendas
+                    </MudText>
+                    <MudSpacer />
+                    <MudIconButton Icon="@Icons.Material.Filled.Refresh"
+                                   Size="Size.Small"
+                                   OnClick="@CargarDatos"
+                                   Disabled="@cargando" />
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh>Prenda</MudTh>
+                    <MudTh>Código</MudTh>
+                    <MudTh>Tiempo cambio (min)</MudTh>
+                    <MudTh>Operaciones</MudTh>
+                    <MudTh>SAM Total</MudTh>
+                    <MudTh>Acciones</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Prenda">
+                        <div class="d-flex align-center">
+                            <MudAvatar Size="Size.Small" Class="mr-2" Color="Color.Secondary" Variant="Variant.Text">
+                                <MudIcon Icon="@Icons.Material.Filled.Checkroom" Size="Size.Small" />
+                            </MudAvatar>
+                            <MudText Typo="Typo.body1" Class="font-weight-medium">@context.Nombre</MudText>
+                        </div>
+                    </MudTd>
+                    <MudTd DataLabel="Código">
+                        <MudChip T="string" Size="Size.Small" Color="Color.Default" Variant="Variant.Outlined">
+                            @context.Codigo
+                        </MudChip>
+                    </MudTd>
+                    <MudTd DataLabel="Tiempo cambio">
+                        <MudText Typo="Typo.body2">@context.TiempoCambioLineaMinutos min</MudText>
+                    </MudTd>
+                    <MudTd DataLabel="Operaciones">
+                        <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Filled">
+                            @context.Operaciones.Count() op.
+                        </MudChip>
+                    </MudTd>
+                    <MudTd DataLabel="SAM Total">
+                        <MudChip T="string" Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined">
+                            @context.Operaciones.Sum(x=>x.SAMReal)
+                        </MudChip>
+                    </MudTd>
+                    <MudTd DataLabel="Acciones">
+                        <MudTooltip Text="Editar" Arrow>
+                            <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                           Color="Color.Primary" Size="Size.Small"
+                                           OnClick="@(() => AbrirEditar(context))" />
+                        </MudTooltip>
+                        <MudTooltip Text="Eliminar" Arrow>
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                           Color="Color.Error" Size="Size.Small"
+                                           OnClick="@(() => Eliminar(context))" />
+                        </MudTooltip>
+                    </MudTd>
+                </RowTemplate>
+                <NoRecordsContent>
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                        <MudIcon Icon="@Icons.Material.Filled.Info" Class="mr-2" />
+                        @(string.IsNullOrEmpty(searchTerm) ? "No hay prendas cargadas" : "No se encontraron prendas con ese criterio")
+                    </MudAlert>
+                </NoRecordsContent>
+                <LoadingContent>
+                    <div class="d-flex justify-center pa-8">
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Large" />
+                        <MudText Class="ml-3">Cargando prendas...</MudText>
+                    </div>
+                </LoadingContent>
+            </MudTable>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@code {
+    private List<PrendaGetDTO> prendas = new();
+    private bool cargando = true;
+    private string searchTerm = string.Empty;
+
+    private List<PrendaGetDTO> prendasFiltradas => prendas
+        .Where(p => string.IsNullOrEmpty(searchTerm) ||
+                    p.Nombre.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    p.Codigo.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+        .OrderBy(p => p.Nombre)
+        .ToList();
+
+    protected override async Task OnInitializedAsync() => await CargarDatos();
+
+    private async Task CargarDatos()
+    {
+        try
+        {
+            cargando = true;
+            StateHasChanged();
+            var resp = await prendaService.GetPrendas();
+            if (!resp.Error)
+                prendas = resp.Response ?? new();
+            else
+                Snackbar.Add("Error al cargar prendas", Severity.Error);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error inesperado: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            cargando = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task AbrirCrear()
+    {
+        var modelo = new PrendaGetDTO();
+        var parametros = new DialogParameters<PrendaFormDialog>
+        {
+            { x => x.Modelo, modelo },
+            { x => x.IsEditMode, false }
+        };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var dialog = await DialogService.ShowAsync<PrendaFormDialog>("Nueva Prenda", parametros, options);
+        var resultado = await dialog.Result;
+
+        if (resultado is { Canceled: false })
+        {
+            var datos = (PrendaGetDTO)resultado.Data!;
+            var post = new PrendaPostDTO
+            {
+                Nombre = datos.Nombre,
+                Codigo = datos.Codigo,
+                TiempoCambioLineaMinutos = datos.TiempoCambioLineaMinutos
+            };
+            var resp = await prendaService.PostPrenda(post);
+            if (!resp.Error)
+            {
+                Snackbar.Add($"✅ Prenda {datos.Nombre} creada correctamente", Severity.Success);
+                await CargarDatos();
+            }
+            else
+            {
+                var error = await resp.GetBody();
+                Snackbar.Add($"❌ Error: {error}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task AbrirEditar(PrendaGetDTO prenda)
+    {
+        var modelo = new PrendaGetDTO
+        {
+            Id = prenda.Id,
+            Nombre = prenda.Nombre,
+            Codigo = prenda.Codigo,
+            TiempoCambioLineaMinutos = prenda.TiempoCambioLineaMinutos
+        };
+        var parametros = new DialogParameters<PrendaFormDialog>
+        {
+            { x => x.Modelo, modelo },
+            { x => x.IsEditMode, true }
+        };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var dialog = await DialogService.ShowAsync<PrendaFormDialog>("Editar Prenda", parametros, options);
+        var resultado = await dialog.Result;
+
+        if (resultado is { Canceled: false })
+        {
+            var datos = (PrendaGetDTO)resultado.Data!;
+            var put = new PrendaPutDTO
+            {
+                Id = datos.Id,
+                Nombre = datos.Nombre,
+                Codigo = datos.Codigo,
+                TiempoCambioLineaMinutos = datos.TiempoCambioLineaMinutos
+            };
+            var resp = await prendaService.PutPrenda(datos.Id, put);
+            if (!resp.Error)
+            {
+                Snackbar.Add($"✏️ Prenda {datos.Nombre} actualizada correctamente", Severity.Success);
+                await CargarDatos();
+            }
+            else
+            {
+                var error = await resp.GetBody();
+                Snackbar.Add($"❌ Error: {error}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task Eliminar(PrendaGetDTO prenda)
+    {
+        var confirmar = await DialogService.ShowMessageBoxAsync(
+            title: "Confirmar eliminación",
+            message: $"¿Está seguro que desea eliminar la prenda {prenda.Nombre} ({prenda.Codigo})?",
+            yesText: "Sí, eliminar",
+            cancelText: "Cancelar",
+            options: new DialogOptions { CloseButton = true });
+
+        if (confirmar == true)
+        {
+            var resp = await prendaService.DeletePrenda(prenda.Id);
+            if (!resp.Error)
+                Snackbar.Add($"🗑️ Prenda {prenda.Nombre} eliminada", Severity.Success);
+            else
+                Snackbar.Add("❌ Error al eliminar la prenda", Severity.Error);
+            await CargarDatos();
+        }
+    }
+}

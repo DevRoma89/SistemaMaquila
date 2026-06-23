@@ -13,6 +13,7 @@ namespace SistemaMaquila.Shared.Entidades.OperacionPrendaFolder
         public int OrdenSecuencia { get; set; }
         public int OperacionId { get; set; }
         public string Operacion { get; set; }
+        public string TipoMaquina{ get; set; }
         public decimal SAMReal { get; set; }
     
         public static OperacionPrendaGetDTO EntityToDto (OperacionPrenda ent)
@@ -25,6 +26,7 @@ namespace SistemaMaquila.Shared.Entidades.OperacionPrendaFolder
                 OrdenSecuencia = ent.OrdenSecuencia,
                 OperacionId = ent.OperacionId,
                 Operacion = ent.Operacion.Descripcion,
+                TipoMaquina = ent.Operacion.TipoMaquina.Nombre,
                 SAMReal = ent.SAMReal
             }; 
 

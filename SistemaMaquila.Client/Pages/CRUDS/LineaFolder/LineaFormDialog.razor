@@ -1,4 +1,6 @@
 ﻿@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject LineaService lineaService
 
 <MudDialog>
     <TitleContent>
@@ -6,81 +8,40 @@
             <MudIcon Icon="@(IsEditMode ? Icons.Material.Filled.Edit : Icons.Material.Filled.Factory)"
                      Color="@(IsEditMode ? Color.Primary : Color.Success)"
                      Class="mr-2" />
-            @(IsEditMode ? "Editar Linea" : "Nuevo Linea")
+            @(IsEditMode ? "Editar Línea" : "Nueva Línea")
         </MudText>
     </TitleContent>
 
     <DialogContent>
-        <MudForm @ref="form" Model="@Modelo">
-            <MudGrid>
-                <!-- Nombre -->
-                <MudItem xs="12" sm="6">
-                    <MudTextField @bind-Value="Modelo.Nombre"
-                                  Label="Nombre *"
-                                  Placeholder="Ingrese el nombre"
-                                  Variant="Variant.Outlined"
-                                  Margin="Margin.Dense"
-                                  Adornment="Adornment.Start"
-                                  AdornmentIcon="@Icons.Material.Filled.Badge"
-                                  For="@(() => Modelo.Nombre)"
-                                  Required="true"
-                                  RequiredError="El nombre es obligatorio"
-                                  Immediate="true">
-
-                    </MudTextField>
-                </MudItem>
-                 
-
-                <!-- Eficiencia Historica -->
-                <MudItem xs="12" sm="6">
-                    <MudNumericField @bind-Value="Modelo.EficienciaHistorica"
-                                     Label="Eficiencia Historica *"
-                                     Placeholder="0.00"
-                                     Variant="Variant.Outlined"
-                                     Margin="Margin.Dense"
-                                     Adornment="Adornment.Start"
-                                     AdornmentIcon="@Icons.Material.Filled.Percent" 
-                                     Min="0.01m"
-                                     Max="1m"
-                                     Step="0.01m"
-                                     Required="true"
-                                     RequiredError="Debe ingresar una eficiencia mayor a 0"
-                                     HelperText="La eficiencia debe ser mayor a 0">
-
-                        
-                    </MudNumericField>
-                </MudItem>
-                  
-                <!-- Información adicional en modo edición -->
-                @if (IsEditMode && Modelo.Id > 0)
-                {
-                    <MudItem xs="12">
-                        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="mt-2">
-                            <MudText Typo="Typo.body2">
-                                <MudIcon Icon="@Icons.Material.Filled.Info" Size="Size.Small" Class="mr-1" />
-                                Editando linea con ID: <strong>@Modelo.Id</strong>
-                            </MudText>
-                        </MudAlert>
-                    </MudItem>
-                }
-            </MudGrid>
-        </MudForm>
+        @if (IsEditMode)
+        {
+            <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pt-4">
+                <MudTabPanel Text="Datos generales" Icon="@Icons.Material.Filled.Info">
+                    @FormDatosGenerales
+                </MudTabPanel>
+                <MudTabPanel Text="Máquinas en Línea" Icon="@Icons.Material.Filled.Construction"
+                             BadgeData="@(inventario.Count > 0 ? inventario.Count.ToString() : null)"
+                             BadgeColor="Color.Primary">
+                    @FormInventarioMaquinas
+                </MudTabPanel>
+            </MudTabs>
+        }
+        else
+        {
+            @FormDatosGenerales
+        }
     </DialogContent>
 
-    <DialogActions >
-        <MudButton Class="mb-2"
-                   Variant="Variant.Text"
-                   OnClick="Cancelar"
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="Cancelar"
                    StartIcon="@Icons.Material.Filled.Close">
             Cancelar
         </MudButton>
-
-        <MudButton Class="mb-2 me-4"
-                   Variant="Variant.Filled"
+        <MudButton Variant="Variant.Filled"
                    Color="@(IsEditMode ? Color.Primary : Color.Success)"
                    OnClick="Guardar"
                    StartIcon="@(IsEditMode ? Icons.Material.Filled.Save : Icons.Material.Filled.Check)"
-                   Disabled="@(  string.IsNullOrEmpty(Modelo.Nombre) )">
+                   Disabled="@(string.IsNullOrEmpty(Modelo.Nombre))">
             @(IsEditMode ? "Actualizar" : "Crear")
         </MudButton>
     </DialogActions>
@@ -88,52 +49,290 @@
 
 @code {
     [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
-
-    [Parameter] public LineaFormModel Modelo { get; set; } = new();
+    [Parameter] public LineaGetDTO Modelo { get; set; } = new();
     [Parameter] public bool IsEditMode { get; set; } = false;
 
     private MudForm form = default!;
 
-    protected override void OnInitialized()
+    private List<InventarioLineaGetDTO> inventario = new();
+    private List<TipoMaquinaGetDTO> maquinasBase = new();
+
+    private bool cargandoInventario = false;
+    private bool mostrarFormMaquina = false;
+    private bool editandoMaquina = false;
+
+    // Objeto local para almacenar lo que se está creando/editando
+    private InventarioLineaPostDTO maqActual = new();
+    // Variable auxiliar para rastrear el ID del registro de inventario al editar
+    private int inventarioLineaIdActual = 0;
+
+    protected override async Task OnInitializedAsync()
     {
-        // Limpiar valores vacíos en modo creación
-        if (!IsEditMode)
-        {
-            Modelo.Nombre ??= string.Empty;
-            Modelo.EficienciaHistorica = 0.1m;
-        }
+        if (IsEditMode) await CargarDatosInventario();
+    }
+
+    private async Task CargarDatosInventario()
+    {
+        cargandoInventario = true;
+        var invResp = await lineaService.GetInventarioPorLinea(Modelo.Id);
+        var maquinasResp = await lineaService.GetTipoMaquinas();
+
+        if (!invResp.Error) inventario = invResp.Response ?? new();
+        if (!maquinasResp.Error) maquinasBase = maquinasResp.Response ?? new();
+
+        cargandoInventario = false;
     }
 
     private async Task Guardar()
     {
         await form.ValidateAsync();
-
-        if (!form.IsValid || !ValidarDatos())
-        {
-            Snackbar.Add("Por favor, corrija los errores antes de continuar", Severity.Warning);
-            return;
-        }
-
+        if (!form.IsValid || !ValidarDatos()) return;
         MudDialog.Close(DialogResult.Ok(Modelo));
     }
 
     private bool ValidarDatos()
     {
         if (string.IsNullOrWhiteSpace(Modelo.Nombre))
-        {
-            Snackbar.Add("El nombre es obligatorio", Severity.Error);
-            return false;
-        }
-         
-        if (Modelo.EficienciaHistorica <= 0)
-        {
-            Snackbar.Add("La Eficiencia Historica debe ser mayor a 0", Severity.Error);
-            return false;
-        }
-          
+        { Snackbar.Add("El nombre de la línea es obligatorio", Severity.Error); return false; }
         return true;
     }
 
     private void Cancelar() => MudDialog.Cancel();
 
+    // ── CRUD Inventario de Máquinas ───────────────────────────────
+
+    private void AbrirNuevaMaquina()
+    {
+        maqActual = new InventarioLineaPostDTO
+        {
+            LineaId = Modelo.Id,
+            CantidadDisponible = 1
+        };
+        editandoMaquina = false;
+        mostrarFormMaquina = true;
+    }
+
+    private void AbrirEditarMaquina(InventarioLineaGetDTO item)
+    {
+        inventarioLineaIdActual = item.Id;
+        maqActual = new InventarioLineaPostDTO
+        {
+            LineaId = item.LineaId,
+            TipoMaquinaId = item.TipoMaquinaId,
+            CantidadDisponible = item.CantidadDisponible
+        };
+        editandoMaquina = true;
+        mostrarFormMaquina = true;
+    }
+
+    private void CancelarFormMaquina()
+    {
+        mostrarFormMaquina = false;
+        editandoMaquina = false;
+        maqActual = new();
+    }
+
+    private async Task GuardarMaquina()
+    {
+        if (maqActual.TipoMaquinaId <= 0)
+        { Snackbar.Add("Debe seleccionar un tipo de máquina", Severity.Warning); return; }
+        if (maqActual.CantidadDisponible <= 0)
+        { Snackbar.Add("La cantidad debe ser mayor a 0", Severity.Warning); return; }
+
+        if (!editandoMaquina && inventario.Any(m => m.TipoMaquinaId == maqActual.TipoMaquinaId))
+        { Snackbar.Add("Este tipo de máquina ya está asignado a la línea", Severity.Warning); return; }
+
+        if (editandoMaquina)
+        {
+            // En tu controlador el Put no recibe un DTO por parámetro en la firma actual,
+            // pero típicamente pasarás el ID y/o el DTO modificado:
+            var resp = await lineaService.PutInventarioLinea(inventarioLineaIdActual, maqActual);
+            if (!resp.Error)
+            {
+                Snackbar.Add("Cantidad de máquinas actualizada", Severity.Success);
+                mostrarFormMaquina = false;
+                await CargarDatosInventario();
+            }
+            else Snackbar.Add("❌ Error al actualizar la máquina", Severity.Error);
+        }
+        else
+        {
+            var resp = await lineaService.PostInventarioLinea(maqActual);
+            if (!resp.Error)
+            {
+                Snackbar.Add("Máquina agregada a la línea", Severity.Success);
+                mostrarFormMaquina = false;
+                await CargarDatosInventario();
+            }
+            else Snackbar.Add("❌ Error al agregar la máquina", Severity.Error);
+        }
+    }
+
+    private async Task EliminarMaquina(InventarioLineaGetDTO item)
+    {
+        var confirmar = await DialogService.ShowMessageBoxAsync(
+            title: "Quitar máquina",
+            message: $"¿Está seguro de quitar la máquina '{item.TipoMaquina}' de esta línea?",
+            yesText: "Sí, quitar",
+            cancelText: "Cancelar");
+
+        if (confirmar == true)
+        {
+            var resp = await lineaService.DeleteInventarioLinea(item.Id);
+            if (!resp.Error)
+            {
+                Snackbar.Add("Máquina removida de la línea", Severity.Success);
+                await CargarDatosInventario();
+            }
+            else Snackbar.Add("❌ Error al remover la máquina", Severity.Error);
+        }
+    }
+
+    // Si está editando, permitimos ver la máquina actual en el Select, sino la filtramos.
+    private IEnumerable<TipoMaquinaGetDTO> MaquinasDisponibles =>
+        editandoMaquina
+            ? maquinasBase
+            : maquinasBase.Where(m => inventario.All(inv => inv.TipoMaquinaId != m.Id));
+
+
+    // ── RenderFragments ──────────────────────────
+
+    private RenderFragment FormDatosGenerales => __builder =>
+        {
+            <MudForm @ref="form" Model="@Modelo">
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="Modelo.Nombre"
+                                      Label="Nombre de la Línea *"
+                                      Placeholder="Ej: Línea de Ensamble A"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense"
+                                      Adornment="Adornment.Start"
+                                      AdornmentIcon="@Icons.Material.Filled.Badge"
+                                      For="@(() => Modelo.Nombre)"
+                                      Required="true"
+                                      RequiredError="El nombre es obligatorio"
+                                      Immediate="true" />
+                    </MudItem>
+                </MudGrid>
+            </MudForm>
+        };
+
+    private RenderFragment FormInventarioMaquinas => __builder =>
+    {
+        @if (cargandoInventario)
+        {
+            <div class="d-flex justify-center pa-6">
+                <MudProgressCircular Color="Color.Primary" Size="Size.Medium" />
+            </div>
+        }
+        else
+        {
+            <div class="d-flex justify-space-between align-center mb-3">
+                <div>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        Tipos de máquinas en línea: <strong>@inventario.Count</strong>
+                    </MudText>
+                </div>
+                @if (!mostrarFormMaquina)
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               Size="Size.Small"
+                               StartIcon="@Icons.Material.Filled.Add"
+                               OnClick="AbrirNuevaMaquina"
+                               Disabled="@(!MaquinasDisponibles.Any())">
+                        Agregar Máquina
+                    </MudButton>
+                }
+            </div>
+
+            @if (mostrarFormMaquina)
+            {
+                <MudPaper Elevation="0" Class="pa-3 mb-3"
+                          Style="border: 1px solid var(--mud-palette-divider); border-radius: 8px;">
+                    <MudText Typo="Typo.subtitle2" Class="mb-2">
+                        @(editandoMaquina ? "Editar Cantidad de Máquina" : "Asignar Nueva Máquina")
+                    </MudText>
+                    <MudGrid>
+                        <MudItem xs="12" sm="8">
+                            <MudSelect T="int"
+                                       @bind-Value="maqActual.TipoMaquinaId"
+                                       Label="Seleccione Máquina *"
+                                       Variant="Variant.Outlined"
+                                       Margin="Margin.Dense"
+                                       Disabled="@editandoMaquina">
+                                @foreach (var maq in MaquinasDisponibles)
+                                {
+                                    <MudSelectItem Value="@maq.Id">@maq.Nombre</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="12" sm="4">
+                            <MudNumericField @bind-Value="maqActual.CantidadDisponible"
+                                             Label="Cantidad *"
+                                             Variant="Variant.Outlined"
+                                             Margin="Margin.Dense"
+                                             Min="1" Step="1" />
+                        </MudItem>
+                    </MudGrid>
+                    <div class="d-flex gap-2 mt-3">
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Success" Size="Size.Small"
+                                   StartIcon="@Icons.Material.Filled.Check"
+                                   OnClick="GuardarMaquina">
+                            @(editandoMaquina ? "Actualizar" : "Agregar")
+                        </MudButton>
+                        <MudButton Variant="Variant.Text" Size="Size.Small"
+                                   StartIcon="@Icons.Material.Filled.Close"
+                                   OnClick="CancelarFormMaquina">
+                            Cancelar
+                        </MudButton>
+                    </div>
+                </MudPaper>
+            }
+
+            @if (!inventario.Any())
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="mt-2">
+                    Esta línea no cuenta con máquinas asignadas en su inventario.
+                </MudAlert>
+            }
+            else
+            {
+                <MudTable Items="@inventario" Dense="true" Hover="true"
+                          Elevation="0" Bordered="true" Breakpoint="Breakpoint.None">
+                    <HeaderContent>
+                        <MudTh>Máquina</MudTh>
+                        <MudTh>Cantidad Asignada</MudTh>
+                        <MudTh>Acciones</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Máquina">
+                            <MudText Typo="Typo.body2" Class="font-weight-medium">@context.TipoMaquina</MudText>
+                        </MudTd>
+                        <MudTd DataLabel="Cantidad Asignada">
+                            <MudChip T="string" Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined">
+                                @context.CantidadDisponible u.
+                            </MudChip>
+                        </MudTd>
+                        <MudTd DataLabel="Acciones">
+                            <MudTooltip Text="Editar Cantidad" Arrow>
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                               Color="Color.Primary" Size="Size.Small"
+                                               OnClick="@(() => AbrirEditarMaquina(context))"
+                                               Disabled="@mostrarFormMaquina" />
+                            </MudTooltip>
+                            <MudTooltip Text="Eliminar de la Línea" Arrow>
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                               Color="Color.Error" Size="Size.Small"
+                                               OnClick="@(() => EliminarMaquina(context))"
+                                               Disabled="@mostrarFormMaquina" />
+                            </MudTooltip>
+                        </MudTd>
+                    </RowTemplate>
+                </MudTable>
+            }
+        }
+    };
 }

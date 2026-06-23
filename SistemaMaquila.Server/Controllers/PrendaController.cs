@@ -23,9 +23,12 @@ namespace SistemaMaquila.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<PrendaGetDTO>>> Get()
         {
+
+            
+
             return await context.Prendas
                                 .Include(x=>x.Operaciones)
-                                .ThenInclude(x=>x.Operacion)
+                                .ThenInclude(x=>x.Operacion.TipoMaquina)
                                 .Where(x => x.Visible == true)
                                 .Select(x => PrendaGetDTO.EntityToDto(x))
                                 .ToListAsync();
@@ -69,15 +72,27 @@ namespace SistemaMaquila.Server.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Put()
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] PrendaPutDTO dto)
         {
+            if (id != dto.Id) return BadRequest("El Id no coincide.");
+            var ent = await context.Prendas.FirstOrDefaultAsync(x => x.Id == id);
+            if (ent == null) return NotFound("Prenda no encontrada.");
+
+            ent.Nombre = dto.Nombre.ToUpper();
+            ent.Codigo = dto.Codigo.ToUpper();
+            ent.TiempoCambioLineaMinutos = dto.TiempoCambioLineaMinutos;
+            await context.SaveChangesAsync();
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
+            var ent = await context.Prendas.FirstOrDefaultAsync(x => x.Id == id);
+            if (ent == null) return NotFound();
+            ent.Visible = false;
+            await context.SaveChangesAsync();
             return Ok();
         }
 

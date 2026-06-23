@@ -74,7 +74,7 @@
                             <MudAvatar Size="Size.Small" Class="mr-2" Color="Color.Primary" Variant="Variant.Text">
                                 <MudIcon Icon="@Icons.Material.Filled.Factory" Size="Size.Small" />
                             </MudAvatar>
-                          
+                          @context.Nombre
                         </div>
                     </MudTd>
                     <MudTd DataLabel="Eficiencia Historica">
@@ -166,7 +166,7 @@
 
     private async Task AbrirCrear()
     {
-        var modelo = new LineaFormModel();
+        var modelo = new LineaGetDTO();
 
         var parametros = new DialogParameters<LineaFormDialog>
         {
@@ -211,7 +211,7 @@
 
     private async Task AbrirEditar(LineaGetDTO linea)
     {
-        var modelo = new LineaFormModel
+        var modelo = new LineaGetDTO
         {
             Id = linea.Id,
             Nombre = linea.Nombre,

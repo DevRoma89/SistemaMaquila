@@ -1,21 +1,228 @@
 ﻿@inject ISnackbar Snackbar
+@inject HabilidadEmpleadoService habilidadService
 
 <MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h6" Class="d-flex align-center">
-            <MudIcon Icon="@(IsEditMode ? Icons.Material.Filled.Edit : Icons.Material.Filled.PersonAdd)" 
-                     Color="@(IsEditMode ? Color.Primary : Color.Success)" 
+            <MudIcon Icon="@(IsEditMode ? Icons.Material.Filled.Edit : Icons.Material.Filled.PersonAdd)"
+                     Color="@(IsEditMode ? Color.Primary : Color.Success)"
                      Class="mr-2" />
             @(IsEditMode ? "Editar Empleado" : "Nuevo Empleado")
         </MudText>
     </TitleContent>
 
     <DialogContent>
+        @if (IsEditMode)
+        {
+            <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pt-4">
+
+                <!-- ── Pestaña 1: Datos generales ── -->
+                <MudTabPanel Text="Datos generales" Icon="@Icons.Material.Filled.Person">
+                    @FormDatosGenerales
+                </MudTabPanel>
+
+                <!-- ── Pestaña 2: Habilidades ── -->
+                <MudTabPanel Text="Habilidades" Icon="@Icons.Material.Filled.Build"
+                             BadgeData="@(habilidades.Count > 0 ? habilidades.Count.ToString() : null)"
+                             BadgeColor="Color.Primary">
+                    @FormHabilidades
+                </MudTabPanel>
+
+            </MudTabs>
+        }
+        else
+        {
+            @FormDatosGenerales
+        }
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Variant="Variant.Text"
+                   OnClick="Cancelar"
+                   StartIcon="@Icons.Material.Filled.Close">
+            Cancelar
+        </MudButton>
+        <MudButton Variant="Variant.Filled"
+                   Color="@(IsEditMode ? Color.Primary : Color.Success)"
+                   OnClick="Guardar"
+                   StartIcon="@(IsEditMode ? Icons.Material.Filled.Save : Icons.Material.Filled.Check)"
+                   Disabled="@(!Lineas.Any() || string.IsNullOrEmpty(Modelo.Nombre) || string.IsNullOrEmpty(Modelo.Apellido))">
+            @(IsEditMode ? "Actualizar" : "Crear")
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* ─────────────────────────────────────────────
+   RenderFragments separados para mantener orden
+   ───────────────────────────────────────────── *@
+
+@code {
+
+    // ── Parámetros ──────────────────────────────
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public EmpleadoFormModel Modelo { get; set; } = new();
+    [Parameter] public List<LineaGetDTO> Lineas { get; set; } = new();
+    [Parameter] public bool IsEditMode { get; set; } = false;
+
+    // ── Estado interno ───────────────────────────
+    private MudForm form = default!;
+    private List<HabilidadEmpleadoGetDTO> habilidades = new();
+    private List<OperacionGetDTO> operaciones = new();
+    private bool cargandoHabilidades = false;
+
+    // Estado del formulario inline de habilidad
+    private bool mostrarFormHabilidad = false;
+    private bool editandoHabilidad = false;
+    private HabilidadEmpleadoGetDTO habilidadActual = new();
+
+    // ── Ciclo de vida ────────────────────────────
+    protected override async Task OnInitializedAsync()
+    {
+        if (!IsEditMode)
+        {
+            Modelo.Nombre ??= string.Empty;
+            Modelo.Apellido ??= string.Empty;
+        }
+        else
+        {
+            await CargarHabilidades();
+        }
+    }
+
+    private async Task CargarHabilidades()
+    {
+        cargandoHabilidades = true;
+
+        var hResp = await habilidadService.GetPorEmpleado(Modelo.Id);
+        var oResp = await habilidadService.GetOperaciones();
+
+        if (!hResp.Error) habilidades = hResp.Response ?? new();
+        if (!oResp.Error) operaciones = oResp.Response ?? new();
+
+        cargandoHabilidades = false;
+    }
+
+    // ── Guardar empleado ─────────────────────────
+    private async Task Guardar()
+    {
+        await form.ValidateAsync();
+        if (!form.IsValid || !ValidarDatos()) return;
+        MudDialog.Close(DialogResult.Ok(Modelo));
+    }
+
+    private bool ValidarDatos()
+    {
+        if (string.IsNullOrWhiteSpace(Modelo.Nombre))
+        { Snackbar.Add("El nombre es obligatorio", Severity.Error); return false; }
+        if (string.IsNullOrWhiteSpace(Modelo.Apellido))
+        { Snackbar.Add("El apellido es obligatorio", Severity.Error); return false; }
+        if (Modelo.CostoMinutoBase <= 0)
+        { Snackbar.Add("El costo por minuto debe ser mayor a 0", Severity.Error); return false; }
+        if (Modelo.LineaId <= 0)
+        { Snackbar.Add("Debe seleccionar una línea de producción", Severity.Error); return false; }
+        return true;
+    }
+
+    private void Cancelar() => MudDialog.Cancel();
+
+    // ── CRUD Habilidades ─────────────────────────
+    private void AbrirNuevaHabilidad()
+    {
+        habilidadActual = new HabilidadEmpleadoGetDTO();
+        editandoHabilidad = false;
+        mostrarFormHabilidad = true;
+    }
+
+    private void AbrirEditarHabilidad(HabilidadEmpleadoGetDTO h)
+    {
+        habilidadActual = new HabilidadEmpleadoGetDTO
+        {
+            Id = h.Id,
+            OperacionId = h.OperacionId,
+            EficienciaSocio = h.EficienciaSocio
+        };
+        editandoHabilidad = true;
+        mostrarFormHabilidad = true;
+    }
+
+    private void CancelarFormHabilidad()
+    {
+        mostrarFormHabilidad = false;
+        habilidadActual = new();
+    }
+
+    private async Task GuardarHabilidad()
+    {
+        if (habilidadActual.OperacionId <= 0)
+        { Snackbar.Add("Debe seleccionar una operación", Severity.Warning); return; }
+        if (habilidadActual.EficienciaSocio <= 0 || habilidadActual.EficienciaSocio > 1)
+        { Snackbar.Add("La eficiencia debe ser un valor entre 0.01 y 1.00", Severity.Warning); return; }
+
+        // Validar que no exista ya esa operación para el mismo empleado (solo al crear)
+        if (!editandoHabilidad && habilidades.Any(h => h.OperacionId == habilidadActual.OperacionId))
+        { Snackbar.Add("El empleado ya tiene esa operación asignada", Severity.Warning); return; }
+
+        if (editandoHabilidad)
+        {
+            var dto = new HabilidadEmpleadoPutDTO
+            {
+                Id = habilidadActual.Id,
+                EmpleadoId = Modelo.Id,
+                OperacionId = habilidadActual.OperacionId,
+                EficienciaSocio = habilidadActual.EficienciaSocio
+            };
+            var resp = await habilidadService.Put(habilidadActual.Id, dto);
+            if (!resp.Error)
+                Snackbar.Add("Habilidad actualizada", Severity.Success);
+            else
+            { Snackbar.Add("Error al actualizar la habilidad", Severity.Error); return; }
+        }
+        else
+        {
+            var dto = new HabilidadEmpleadoPostDTO
+            {
+                EmpleadoId = Modelo.Id,
+                OperacionId = habilidadActual.OperacionId,
+                EficienciaSocio = habilidadActual.EficienciaSocio
+            };
+            var resp = await habilidadService.Post(dto);
+            if (!resp.Error)
+                Snackbar.Add("Habilidad agregada", Severity.Success);
+            else
+            { Snackbar.Add("Error al agregar la habilidad", Severity.Error); return; }
+        }
+
+        mostrarFormHabilidad = false;
+        await CargarHabilidades();
+    }
+
+    private async Task EliminarHabilidad(HabilidadEmpleadoGetDTO h)
+    {
+        var resp = await habilidadService.Delete(h.Id);
+        if (!resp.Error)
+        {
+            Snackbar.Add($"Habilidad '{h.Operacion}' eliminada", Severity.Success);
+            await CargarHabilidades();
+        }
+        else
+        {
+            Snackbar.Add("Error al eliminar la habilidad", Severity.Error);
+        }
+    }
+
+    // Operaciones que aún no tiene el empleado (para el select de nueva habilidad)
+    private IEnumerable<OperacionGetDTO> OperacionesDisponibles =>
+        editandoHabilidad
+            ? operaciones  // en edición permite cambiar a cualquier operación
+            : operaciones.Where(o => habilidades.All(h => h.OperacionId != o.Id));
+
+    // ── RenderFragments ──────────────────────────
+    private RenderFragment FormDatosGenerales => __builder =>
+    {
         <MudForm @ref="form" Model="@Modelo">
             <MudGrid>
-                <!-- Nombre -->
                 <MudItem xs="12" sm="6">
-                    <MudTextField @bind-Value="Modelo.Nombre" 
+                    <MudTextField @bind-Value="Modelo.Nombre"
                                   Label="Nombre *"
                                   Placeholder="Ingrese el nombre"
                                   Variant="Variant.Outlined"
@@ -25,14 +232,10 @@
                                   For="@(() => Modelo.Nombre)"
                                   Required="true"
                                   RequiredError="El nombre es obligatorio"
-                                  Immediate="true">
-                     
-                    </MudTextField>
+                                  Immediate="true" />
                 </MudItem>
-
-                <!-- Apellido -->
                 <MudItem xs="12" sm="6">
-                    <MudTextField @bind-Value="Modelo.Apellido" 
+                    <MudTextField @bind-Value="Modelo.Apellido"
                                   Label="Apellido *"
                                   Placeholder="Ingrese el apellido"
                                   Variant="Variant.Outlined"
@@ -42,43 +245,30 @@
                                   For="@(() => Modelo.Apellido)"
                                   Required="true"
                                   RequiredError="El apellido es obligatorio"
-                                  Immediate="true">
-                        
-                    </MudTextField>
+                                  Immediate="true" />
                 </MudItem>
-
-                <!-- Costo por minuto -->
                 <MudItem xs="12" sm="6">
-                    <MudNumericField @bind-Value="Modelo.CostoMinutoBase" 
+                    <MudNumericField @bind-Value="Modelo.CostoMinutoBase"
                                      Label="Costo por minuto *"
-                                     Placeholder="0.00"
                                      Variant="Variant.Outlined"
                                      Margin="Margin.Dense"
                                      Adornment="Adornment.Start"
                                      AdornmentIcon="@Icons.Material.Filled.AttachMoney"
                                      Format="C"
-                                     Min="0.01m"
-                                     Max="999999.99m"
-                                     Step="0.01m" 
+                                     Min="0.01m" Max="999999.99m" Step="0.01m"
                                      Required="true"
-                                     RequiredError="Debe ingresar un costo mayor a 0"
-                                     HelperText="El costo por minuto debe ser mayor a 0">
-                        
-                      
-                    </MudNumericField>
+                                     RequiredError="Debe ingresar un costo mayor a 0" />
                 </MudItem>
-
-                <!-- Línea de producción -->
                 <MudItem xs="12" sm="6">
-                    <MudSelect T="int" 
-                               @bind-Value="Modelo.LineaId" 
+                    <MudSelect T="int"
+                               @bind-Value="Modelo.LineaId"
                                Label="Línea de producción *"
                                Variant="Variant.Outlined"
                                Margin="Margin.Dense"
                                Adornment="Adornment.Start"
                                AdornmentIcon="@Icons.Material.Filled.Factory"
                                Required="true"
-                               RequiredError="Debe seleccionar una línea" >
+                               RequiredError="Debe seleccionar una línea">
                         @if (!Lineas.Any())
                         {
                             <MudSelectItem Value="0" Disabled="true">
@@ -89,26 +279,16 @@
                         {
                             @foreach (var linea in Lineas)
                             {
-                                <MudSelectItem Value="@linea.Id">
-                                    <div class="d-flex align-center">
-                                       
-                                       
-                                        <MudText>@linea.Nombre</MudText>
-                                         
-                                    </div>
-                                </MudSelectItem>
+                                <MudSelectItem Value="@linea.Id">@linea.Nombre</MudSelectItem>
                             }
                         }
                     </MudSelect>
                 </MudItem>
-
-                <!-- Información adicional en modo edición -->
                 @if (IsEditMode && Modelo.Id > 0)
                 {
                     <MudItem xs="12">
                         <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="mt-2">
                             <MudText Typo="Typo.body2">
-                                <MudIcon Icon="@Icons.Material.Filled.Info" Size="Size.Small" Class="mr-1" />
                                 Editando empleado con ID: <strong>@Modelo.Id</strong>
                             </MudText>
                         </MudAlert>
@@ -116,86 +296,144 @@
                 }
             </MudGrid>
         </MudForm>
-    </DialogContent>
+    };
 
-    <DialogActions>
-        <MudButton Variant="Variant.Text" 
-                   OnClick="Cancelar"
-                   StartIcon="@Icons.Material.Filled.Close">
-            Cancelar
-        </MudButton>
-        
-        <MudButton Variant="Variant.Filled" 
-                   Color="@(IsEditMode ? Color.Primary : Color.Success)"
-                   OnClick="Guardar"
-                   StartIcon="@(IsEditMode ? Icons.Material.Filled.Save : Icons.Material.Filled.Check)"
-                   Disabled="@(!Lineas.Any() || string.IsNullOrEmpty(Modelo.Nombre) || string.IsNullOrEmpty(Modelo.Apellido))">
-            @(IsEditMode ? "Actualizar" : "Crear")
-        </MudButton>
-    </DialogActions>
-</MudDialog>
-
-@code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
-
-    [Parameter] public EmpleadoFormModel Modelo { get; set; } = new();
-    [Parameter] public List<LineaGetDTO> Lineas { get; set; } = new();
-    [Parameter] public bool IsEditMode { get; set; } = false;
-
-    private MudForm form = default!;
-
-    protected override void OnInitialized()
+    private RenderFragment FormHabilidades => __builder =>
     {
-        // Limpiar valores vacíos en modo creación
-        if (!IsEditMode)
+        @if (cargandoHabilidades)
         {
-            Modelo.Nombre ??= string.Empty;
-            Modelo.Apellido ??= string.Empty;
+            <div class="d-flex justify-center pa-6">
+                <MudProgressCircular Color="Color.Primary" Size="Size.Medium" />
+            </div>
         }
-    }
-
-    private async Task Guardar()
-    {
-        await form.ValidateAsync();
-
-        if (!form.IsValid || !ValidarDatos())
+        else
         {
-            Snackbar.Add("Por favor, corrija los errores antes de continuar", Severity.Warning);
-            return;
+            <!-- Botón agregar -->
+            <div class="d-flex justify-space-between align-center mb-3">
+                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                    @habilidades.Count habilidad(es) registrada(s)
+                </MudText>
+                @if (!mostrarFormHabilidad)
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               Size="Size.Small"
+                               StartIcon="@Icons.Material.Filled.Add"
+                               OnClick="AbrirNuevaHabilidad"
+                               Disabled="@(!OperacionesDisponibles.Any())">
+                        Agregar habilidad
+                    </MudButton>
+                }
+            </div>
+
+            <!-- Formulario inline -->
+            @if (mostrarFormHabilidad)
+            {
+                <MudPaper Elevation="0" Class="pa-3 mb-3" Style="border: 1px solid var(--mud-palette-divider); border-radius: 8px;">
+                    <MudText Typo="Typo.subtitle2" Class="mb-2">
+                        @(editandoHabilidad ? "Editar habilidad" : "Nueva habilidad")
+                    </MudText>
+                    <MudGrid>
+                        <MudItem xs="12" sm="7">
+                            <MudSelect T="int"
+                                       @bind-Value="habilidadActual.OperacionId"
+                                       Label="Operación *"
+                                       Variant="Variant.Outlined"
+                                       Margin="Margin.Dense"
+                                       Disabled="@editandoHabilidad">
+                                @foreach (var op in OperacionesDisponibles)
+                                {
+                                    <MudSelectItem Value="@op.Id">
+                                        @op.Descripcion
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary" Class="ml-1">
+                                            (@op.TipoMaquina)
+                                        </MudText>
+                                    </MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="12" sm="5">
+                            <MudNumericField @bind-Value="habilidadActual.EficienciaSocio"
+                                             Label="Eficiencia (0.01 – 1.00) *"
+                                             Variant="Variant.Outlined"
+                                             Margin="Margin.Dense"
+                                             Min="0.01m" Max="1.00m" Step="0.05m"
+                                             Format="P0"
+                                             HelperText="Ej: 0.85 = 85%" />
+                        </MudItem>
+                    </MudGrid>
+                    <div class="d-flex gap-2 mt-2">
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Success"
+                                   Size="Size.Small"
+                                   StartIcon="@Icons.Material.Filled.Check"
+                                   OnClick="GuardarHabilidad">
+                            @(editandoHabilidad ? "Actualizar" : "Agregar")
+                        </MudButton>
+                        <MudButton Variant="Variant.Text"
+                                   Size="Size.Small"
+                                   StartIcon="@Icons.Material.Filled.Close"
+                                   OnClick="CancelarFormHabilidad">
+                            Cancelar
+                        </MudButton>
+                    </div>
+                </MudPaper>
+            }
+
+            <!-- Tabla de habilidades -->
+            @if (!habilidades.Any())
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                    Este empleado no tiene habilidades registradas. Usa el botón de arriba para agregar.
+                </MudAlert>
+            }
+            else
+            {
+                <MudTable Items="habilidades" Dense="true" Hover="true" Elevation="0"
+                          Bordered="true" Breakpoint="Breakpoint.None">
+                    <HeaderContent>
+                        <MudTh>Operación</MudTh>
+                        <MudTh>Máquina</MudTh>
+                        <MudTh>Eficiencia</MudTh>
+                        <MudTh>Acciones</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Operación">
+                            <MudText Typo="Typo.body2">@context.Operacion</MudText>
+                        </MudTd>
+                        <MudTd DataLabel="Máquina">
+                            <MudChip T="string" Size="Size.Small" Color="Color.Default" Variant="Variant.Outlined">
+                                @context.TipoMaquina
+                            </MudChip>
+                        </MudTd>
+                        <MudTd DataLabel="Eficiencia">
+                            @{
+                                var pct = context.EficienciaSocio;
+                                var color = pct >= 0.85m ? Color.Success
+                                          : pct >= 0.60m ? Color.Warning
+                                          : Color.Error;
+                            }
+                            <MudChip T="string" Size="Size.Small" Color="@color" Variant="Variant.Filled">
+                                @pct.ToString("P0")
+                            </MudChip>
+                        </MudTd>
+                        <MudTd DataLabel="Acciones">
+                            <MudTooltip Text="Editar" Arrow>
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                               Color="Color.Primary" Size="Size.Small"
+                                               OnClick="@(() => AbrirEditarHabilidad(context))"
+                                               Disabled="@mostrarFormHabilidad" />
+                            </MudTooltip>
+                            <MudTooltip Text="Eliminar" Arrow>
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                               Color="Color.Error" Size="Size.Small"
+                                               OnClick="@(() => EliminarHabilidad(context))"
+                                               Disabled="@mostrarFormHabilidad" />
+                            </MudTooltip>
+                        </MudTd>
+                    </RowTemplate>
+                </MudTable>
+            }
         }
-
-        MudDialog.Close(DialogResult.Ok(Modelo));
-    }
-
-    private bool ValidarDatos()
-    {
-        if (string.IsNullOrWhiteSpace(Modelo.Nombre))
-        {
-            Snackbar.Add("El nombre es obligatorio", Severity.Error);
-            return false;
-        }
-
-        if (string.IsNullOrWhiteSpace(Modelo.Apellido))
-        {
-            Snackbar.Add("El apellido es obligatorio", Severity.Error);
-            return false;
-        }
-
-        if (Modelo.CostoMinutoBase <= 0)
-        {
-            Snackbar.Add("El costo por minuto debe ser mayor a 0", Severity.Error);
-            return false;
-        }
-
-        if (Modelo.LineaId <= 0)
-        {
-            Snackbar.Add("Debe seleccionar una línea de producción", Severity.Error);
-            return false;
-        }
-
-        return true;
-    }
-
-    private void Cancelar() => MudDialog.Cancel();
-     
+    };
 }

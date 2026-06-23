@@ -15,6 +15,147 @@ namespace SistemaMaquila.Server.Controllers
             _context = context;
         }
 
+        [HttpGet("sam-prenda")]
+        public async Task<IActionResult> CalcularSamPrenda(
+    [FromQuery] int prendaId,
+    [FromQuery] int lineaId)
+        {
+            // 1. Cargar prenda con sus operaciones y los tipos de máquina
+            var prenda = await _context.Prendas
+                .Include(p => p.Operaciones)
+                    .ThenInclude(op => op.Operacion)
+                        .ThenInclude(o => o.TipoMaquina)
+                .FirstOrDefaultAsync(p => p.Id == prendaId && p.Visible);
+
+            if (prenda == null)
+                return NotFound("Prenda no encontrada o inactiva.");
+
+            if (!prenda.Operaciones.Any(op => op.Visible))
+                return BadRequest("La prenda no tiene operaciones activas definidas.");
+
+            // 2. Cargar línea con sus empleados e inventario de máquinas
+            var linea = await _context.Lineas
+                .Include(l => l.Empleados.Where(e => e.Visible))
+                .FirstOrDefaultAsync(l => l.Id == lineaId && l.Visible);
+
+            if (linea == null)
+                return NotFound("Línea no encontrada o inactiva.");
+
+            if (!linea.Empleados.Any())
+                return BadRequest("La línea no tiene empleados activos asignados.");
+
+            // 3. Cargar inventario de máquinas de la línea
+            var inventarioLinea = await _context.InventarioLineas
+                .Include(i => i.TipoMaquina)
+                .Where(i => i.LineaId == lineaId && i.Visible)
+                .ToListAsync();
+
+            // 4. Calcular SAM total puro (suma de SAMReal de cada OperacionPrenda activa)
+            var operacionesActivas = prenda.Operaciones
+                .Where(op => op.Visible)
+                .OrderBy(op => op.OrdenSecuencia)
+                .ToList();
+
+            decimal samTotalPuro = operacionesActivas.Sum(op => op.SAMReal);
+
+            // 5. Ajustar SAM por eficiencia de la línea
+            // A menor eficiencia, más minutos reales necesita la línea para producir 1 unidad
+            decimal eficiencia = linea.EficienciaHistorica > 0 ? linea.EficienciaHistorica : 0.01m;
+            decimal samAjustadoPorEficiencia = samTotalPuro / eficiencia;
+
+            // 6. Calcular costo por unidad
+            // Costo minuto combinado de todos los empleados de la línea
+            decimal costoMinutoCombinado = linea.Empleados.Sum(e => e.CostoMinutoBase);
+            decimal costoMinutoPromedioOperario = costoMinutoCombinado / linea.Empleados.Count;
+            // El costo real por minuto productivo ya ajusta la ineficiencia
+            decimal costoMinutoRealPlanta = costoMinutoPromedioOperario / eficiencia;
+            // Costo de producir 1 unidad = minutos reales × costo real por minuto
+            decimal costoPorUnidad = samAjustadoPorEficiencia * costoMinutoRealPlanta;
+
+            // 7. Capacidad diaria estimada de la línea para esta prenda
+            const int jornadaMinutos = 480;
+            decimal minutosTotalesDisponiblesDia = linea.Empleados.Count * jornadaMinutos * eficiencia;
+            decimal unidadesPorDia = samTotalPuro > 0
+                ? minutosTotalesDisponiblesDia / samTotalPuro
+                : 0;
+
+            // 8. Validar disponibilidad de máquinas por tipo
+            // Agrupamos las operaciones por TipoMaquina para saber cuántas se necesitan
+            double piezasPorHora = (double)unidadesPorDia / 8.0;
+
+            var maquinasRequeridas = operacionesActivas
+                .GroupBy(op => op.Operacion.TipoMaquinaId)
+                .Select(grupo =>
+                {
+                    var tipoMaquinaId = grupo.Key;
+                    var nombreMaquina = grupo.First().Operacion.TipoMaquina?.Nombre ?? "Desconocido";
+                    var samDelTipo = grupo.Sum(op => op.SAMReal);
+                    double maquinasTeoricas = (piezasPorHora * (double)samDelTipo) / (60.0 * (double)eficiencia);
+                    int maquinasNecesarias = (int)Math.Ceiling(maquinasTeoricas);
+
+                    var stockLinea = inventarioLinea
+                        .FirstOrDefault(i => i.TipoMaquinaId == tipoMaquinaId);
+                    int maquinasDisponibles = stockLinea?.CantidadDisponible ?? 0;
+
+                    return new
+                    {
+                        TipoMaquinaId = tipoMaquinaId,
+                        NombreMaquina = nombreMaquina,
+                        MaquinasNecesarias = maquinasNecesarias,
+                        MaquinasDisponibles = maquinasDisponibles,
+                        // true = la línea puede cubrir la demanda de ese tipo de máquina
+                        CubreCapacidad = maquinasDisponibles >= maquinasNecesarias
+                    };
+                })
+                .ToList();
+
+            bool lineaPuedeProducirPrenda = maquinasRequeridas.All(m => m.CubreCapacidad);
+
+            // 9. Respuesta completa
+            return Ok(new
+            {
+                Prenda = new
+                {
+                    prenda.Id,
+                    prenda.Nombre,
+                    prenda.Codigo,
+                    TotalOperaciones = operacionesActivas.Count
+                },
+                Linea = new
+                {
+                    linea.Id,
+                    linea.Nombre,
+                    linea.EficienciaHistorica,
+                    CantidadEmpleados = linea.Empleados.Count
+                },
+                SAM = new
+                {
+                    // Minutos teóricos si la línea fuera 100% eficiente
+                    SamTotalPuro = Math.Round(samTotalPuro, 4),
+                    // Minutos reales que consume la línea por unidad
+                    SamAjustadoEficiencia = Math.Round(samAjustadoPorEficiencia, 4),
+                },
+                Costos = new
+                {
+                    CostoMinutoPromedioOperario = Math.Round(costoMinutoPromedioOperario, 4),
+                    CostoMinutoRealPlanta = Math.Round(costoMinutoRealPlanta, 4),
+                    // Cuánto cuesta a la línea producir 1 unidad de esta prenda
+                    CostoPorUnidad = Math.Round(costoPorUnidad, 4)
+                },
+                Capacidad = new
+                {
+                    JornadaMinutos = jornadaMinutos,
+                    MinutosDisponiblesDia = Math.Round(minutosTotalesDisponiblesDia, 2),
+                    UnidadesEstimadasPorDia = Math.Round(unidadesPorDia, 1)
+                },
+                Maquinaria = new
+                {
+                    LineaPuedeProducirPrenda = lineaPuedeProducirPrenda,
+                    DetallePorTipo = maquinasRequeridas
+                }
+            });
+        }
+
         [HttpGet("simular-cut")]
         public async Task<IActionResult> SimularCutNumber([FromQuery] int prendaId, [FromQuery] int cantidadTotal, [FromQuery] int lineaId, [FromQuery] DateTime fechaInicio)
         {
