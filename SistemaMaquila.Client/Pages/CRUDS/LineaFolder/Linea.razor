@@ -186,7 +186,7 @@
 
         if (resultado is { Canceled: false })
         {
-            var datos = (LineaFormModel)resultado.Data!;
+            var datos = (LineaGetDTO)resultado.Data!;
 
             var post = new LineaPostDTO
             {
@@ -236,7 +236,7 @@
 
         if (resultado is { Canceled: false })
         {
-            var datos = (LineaFormModel)resultado.Data!;
+            var datos = (LineaGetDTO)resultado.Data!;
 
             var put = new LineaPutDTO
             {

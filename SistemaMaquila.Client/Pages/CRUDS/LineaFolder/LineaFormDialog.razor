@@ -201,7 +201,7 @@
         {
             <MudForm @ref="form" Model="@Modelo">
                 <MudGrid>
-                    <MudItem xs="12">
+                    <MudItem xs="6">
                         <MudTextField @bind-Value="Modelo.Nombre"
                                       Label="Nombre de la Línea *"
                                       Placeholder="Ej: Línea de Ensamble A"
@@ -212,6 +212,19 @@
                                       For="@(() => Modelo.Nombre)"
                                       Required="true"
                                       RequiredError="El nombre es obligatorio"
+                                      Immediate="true" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudNumericField T="decimal" @bind-Value="Modelo.EficienciaHistorica"
+                                      Label="Eficiencia Historica *"
+                                      Placeholder="Ej: 0.5"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense"
+                                      Adornment="Adornment.Start"
+                                      AdornmentIcon="@Icons.Material.Filled.Badge"
+                                      For="@(() => Modelo.EficienciaHistorica)"
+                                      Required="true"
+                                      RequiredError="El eficiencia debe ser mayor a 0"
                                       Immediate="true" />
                     </MudItem>
                 </MudGrid>

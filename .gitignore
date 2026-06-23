@@ -1,5 +1,6 @@
  
 .vs/
+.vs/SistemaMaquila/
 SistemaMaquila.Client/obj/
 SistemaMaquila.Client/bin/
 SistemaMaquila.Server/obj/
