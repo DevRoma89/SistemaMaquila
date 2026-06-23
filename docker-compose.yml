@@ -1,0 +1,32 @@
+services:
+  # El backend en ASP.NET Core
+  maquila-server:
+    build:
+      context: .
+      dockerfile: SistemaMaquila.Server/Dockerfile
+    container_name: maquila-server
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MaquilaDB;User Id=sa;Password=TuPasswordSeguro123!;TrustServerCertificate=True;
+    networks:
+      - proxy       # <--- Agregado para que NPM lo vea
+      - shared-net  # <--- Se queda para hablar con SQL Server
+
+  # El frontend estático en Nginx
+  maquila-client:
+    build:
+      context: .
+      dockerfile: SistemaMaquila.Client/Dockerfile
+    container_name: maquila-client
+    restart: unless-stopped
+    networks:
+      - proxy       # <--- Cambiado de 'shared-net' a 'proxy'
+
+networks:
+  # Declaramos la red 'proxy' como externa, ya que la maneja el compose de JCC
+  proxy:
+    external: true
+  # La red de la base de datos se queda igual
+  shared-net:
+    external: true

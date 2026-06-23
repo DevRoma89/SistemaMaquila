@@ -1,3 +1,4 @@
+ 
 .vs/
 SistemaMaquila.Client/obj/
 SistemaMaquila.Client/bin/
@@ -5,3 +6,4 @@ SistemaMaquila.Server/obj/
 SistemaMaquila.Server/bin/
 SistemaMaquila.Shared/obj/
 SistemaMaquila.Shared/bin/ 
+ 
